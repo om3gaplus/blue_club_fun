@@ -1,0 +1,13 @@
+float temp=-1;
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+ 
+float p=analogRead(A0);
+if(p-temp>2){
+Serial.println(p);
+temp=p;  
+}
+}
