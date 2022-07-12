@@ -7,7 +7,7 @@ pinMode(A0,INPUT);
 
 void loop() {
   // put your main code here, to run repeatedly:
-  int a=0;
-a=(analogRead(A0))/4;
+float a=analogRead(A0);
+a=map(a,0,1023,0,255);
 analogWrite(3,a);
 }
