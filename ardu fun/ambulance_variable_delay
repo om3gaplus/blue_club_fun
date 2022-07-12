@@ -1,0 +1,16 @@
+void setup() {
+ 
+
+pinMode(3,OUTPUT);
+pinMode(A0,INPUT);
+}
+
+void loop() {
+ 
+  int a=20;
+a=(analogRead(A0));
+digitalWrite(3,HIGH);
+delay(a);
+digitalWrite(3,LOW);
+delay(a);
+}
