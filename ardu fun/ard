@@ -1,0 +1,33 @@
+
+float temp=-1;
+int mstate=0;
+void setup() {
+  Serial.begin(9600);
+  pinMode(2,OUTPUT);
+  pinMode(4,OUTPUT);
+  pinMode(3,OUTPUT);
+}
+
+void loop() {
+digitalWrite(3,HIGH);
+float p=analogRead(A0);
+if(p!=temp&&(p==0||p==1023)){
+  if(mstate==0){
+    mstate=1;
+  }
+  else{mstate=0;}
+temp=p;  
+  digitalWrite(2,LOW);
+  digitalWrite(4,LOW);
+}
+if (mstate==1){
+  digitalWrite(2,HIGH);
+  digitalWrite(4,LOW);
+  Serial.println((String)"motor dar vaziat 1");
+}
+else{
+  digitalWrite(4,HIGH);
+  digitalWrite(2,LOW);  
+  Serial.println((String)"motor dar vaziat 2");
+}
+}
