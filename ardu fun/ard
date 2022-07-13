@@ -19,6 +19,7 @@ if(p!=temp&&(p==0||p==1023)){
 temp=p;  
   digitalWrite(2,LOW);
   digitalWrite(4,LOW);
+  delay(300);
 }
 if (mstate==1){
   digitalWrite(2,HIGH);
