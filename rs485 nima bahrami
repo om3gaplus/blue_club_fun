@@ -1,0 +1,24 @@
+#include<SoftwareSerial.h>
+const byte txpin =1;
+const byte rxpin =2;
+const byte state =3;
+SoftwareSerial jj(rxpin,txpin);
+
+
+void setup() {
+  // put your setup code here, to run once:
+pinMode (rxpin,INPUT);
+pinMode (txpin,OUTPUT);
+pinMode (state,OUTPUT);
+jj.begin(9600);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+digitalWrite(state,LOW);
+if (jj.available()){
+int in=jj.parseInt();
+jj.read();
+digitalWrite(state,HIGH);
+jj.println(in*2);}
+}
