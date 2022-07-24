@@ -8,6 +8,7 @@ const byte rxPin = 8;
 const byte txPin = 9;
 //پورت تعیین وضعیت
 const byte state=10;
+//ساخت ارتباط سریال
 SoftwareSerial rs(rxPin, txPin);
   
 void setup()  {
