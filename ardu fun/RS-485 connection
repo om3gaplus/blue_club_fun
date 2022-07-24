@@ -1,0 +1,36 @@
+
+//کتابخانه ارتباط سریال
+#include <SoftwareSerial.h>
+
+
+//تعریف پورت های ارتباطی
+const byte rxPin = 8;
+const byte txPin = 9;
+//پورت تعیین وضعیت
+const byte state=10;
+SoftwareSerial rs(rxPin, txPin);
+  
+void setup()  {
+  //تعریف پین مود ها
+  pinMode(rxPin, INPUT);
+  pinMode(txPin, OUTPUT);
+  pinMode(state,OUTPUT);
+  //فعال سازی ارتباط
+  rs.begin(9600);  
+}
+
+void loop(){
+  //وضعبت خواندن
+  digitalWrite(state,LOW);
+//بررسی وجود داشتن متن
+if(rs.available()){
+  //ورودی گرفتن
+  int in=rs.parseInt();
+  //خالی کردن بافر
+  rs.read();
+  //وضعیت نوشتن
+  digitalWrite(state,HIGH);
+  //نمایش خروجی
+  rs.println(in);}
+
+}
