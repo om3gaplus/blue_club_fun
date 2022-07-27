@@ -1,0 +1,136 @@
+#include <MPU6050_tockn.h>
+#include <Wire.h>
+const byte pinacm1=5;
+const byte pinr1m1=2;
+const byte pinr2m1=4;
+const float zarib=5.6;
+const byte pinacm2=3;
+const byte pinr1m2=6;
+const byte pinr2m2=7;
+MPU6050 mpu(Wire);
+
+void setup() {
+  Serial.begin(9600);
+  Wire.begin();
+  mpu.begin();
+  mpu.calcGyroOffsets(false);
+    pinMode(pinacm1,OUTPUT);
+  pinMode(pinr1m1,OUTPUT);
+  pinMode(pinr2m1,OUTPUT);
+}
+
+void loop() {
+  float ax,ay;
+  int gstatex,gstatey;
+  angxy(&ax,&ay);
+  gstate(ax,ay,&gstatex,&gstatey);
+  amotorstate(ax,ay,gstatex,gstatey);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ void angxy(float* add_ax,float* add_ay){
+  mpu.update();
+  *add_ax=(mpu.getAngleX());
+  *add_ay=(mpu.getAngleY());
+  }
+
+
+  
+  void gstate(float ax,float ay,int* add_gstatex,int* add_gstatey){
+    if(abs(ax)<5){
+      *add_gstatex=0;
+    }
+    if(ax>=5){
+      *add_gstatex=1;
+    }
+    if(ax<=-5){
+      *add_gstatex=-1;
+    }
+
+
+
+
+    if(abs(ay)<5){
+      *add_gstatey=0;
+    }
+    if(ay>=5){
+      *add_gstatey=1;
+    }
+    if(ay<=-5){
+      *add_gstatey=-1;
+    }
+    
+  }
+  void motorstate(float ax,float ay,int gstatex,int gstatey){
+    if(gstatex==1){
+      digitalWrite(pinr1m1,LOW);
+      digitalWrite(pinr2m1,HIGH);
+      if(ax<=45){
+        analogWrite(pinacm1,(zarib*ax));
+      }
+      if(ax>45){
+        analogWrite(pinacm1,255);
+      }
+    }
+       if(gstatex==-1){
+      digitalWrite(pinr1m1,HIGH);
+      digitalWrite(pinr2m1,LOW);
+      if(ax>=-45){
+        analogWrite(pinacm1,abs(zarib*ax));
+      }
+      if(ax<-45){
+        analogWrite(pinacm1,255);
+      }
+    }
+    if(gstatex==0){
+       analogWrite(pinacm1,0);
+    }
+
+
+
+
+    if(gstatey==1){
+      digitalWrite(pinr1m2,LOW);
+      digitalWrite(pinr2m2,HIGH);
+
+    if(ay<=45){
+        analogWrite(pinacm2,(zarib*ay));
+      }
+      if(ay>45){
+        analogWrite(pinacm2,255);
+      }
+    }
+       if(gstatey==-1){
+      digitalWrite(pinr1m2,HIGH);
+      digitalWrite(pinr2m2,LOW);
+      if(ay>=-45){
+        analogWrite(pinacm2,abs(zarib*ay));
+      }
+      if(ay<-45){
+        analogWrite(pinacm2,255);
+      }
+    }
+    if(gstatey==0){
+       analogWrite(pinacm2,0);
+    }
+  }
