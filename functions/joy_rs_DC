@@ -1,0 +1,92 @@
+
+const byte am1=10;
+const byte am2=11;
+const byte r1m1=9;
+const byte r2m1=8;
+const byte r1m2=7;
+const byte r2m2=6;
+byte rm1=0,rm2=0;
+
+#include <SoftwareSerial.h>
+
+
+//تعریف پورت های ارتباطی
+const byte rxPin = 2;
+const byte txPin = 3;
+//پورت تعیین وضعیت
+//const byte state=4;
+//ساخت ارتباط سریال
+SoftwareSerial rs(rxPin, txPin);
+
+void setup() {
+  pinMode(am1,OUTPUT);
+  pinMode(am2,OUTPUT);
+  pinMode(r1m1,OUTPUT);
+  pinMode(r2m1,OUTPUT);
+  pinMode(r1m2,OUTPUT);
+  pinMode(r2m2,OUTPUT);
+  //Serial.begin(9600);
+  pinMode(rxPin, INPUT);
+  pinMode(txPin, OUTPUT);
+//  pinMode(state,OUTPUT);
+  //فعال سازی ارتباط
+  rs.begin(9600);
+}
+
+void loop() {
+char con;
+//  digitalWrite(state,LOW);
+con=rs.read();
+delay(5);
+//  digitalWrite(state,HIGH);
+
+//  rs.println((String)"rm1 = "+rm1+"rm2"+rm2);
+//digitalWrite(state,LOW);
+if(con=='w'){
+    digitalWrite(r1m1,HIGH);
+  digitalWrite(r2m1,LOW);
+  digitalWrite(r1m2,HIGH);
+  digitalWrite(r2m2,LOW);
+  analogWrite(am1,rm1);analogWrite(am2,rm2);
+
+if(rm1<=245&&rm2<=245){
+  if(rm1==rm2){
+    if(rm1==0){rm1=100;rm2=100;}
+    rm1+=10;rm2+=10;
+  }
+  if(rm1>rm2){
+    rm1=rm2;
+    rm1+=10;rm2+=10;
+  }
+  if(rm1<rm2){
+    rm2=rm1;
+    rm1+=10;rm2+=10;
+  }
+  
+}
+}
+if(con=='q'){
+rm1=0;rm2=0;
+}
+if(con=='s'){
+  digitalWrite(r2m1,HIGH);
+  digitalWrite(r1m1,LOW);
+  digitalWrite(r2m2,HIGH);
+  digitalWrite(r1m2,LOW);
+  analogWrite(am1,rm1);analogWrite(am2,rm2);
+if(rm1>=10&&rm2<=10){
+  if(rm1==rm2){
+    rm1+=10;rm2+=10;
+  }
+  if(rm1>rm2){
+    rm1=rm2;
+    rm1+=10;rm2+=10;
+  }
+  if(rm1<rm2){
+    rm2=rm1;
+    rm1+=10;rm2+=10;
+  }
+  
+}
+}
+}
