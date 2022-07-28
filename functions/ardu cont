@@ -1,0 +1,67 @@
+
+const byte am1=10;
+const byte am2=11;
+const byte r1m1=9;
+const byte r2m1=8;
+const byte r1m2=7;
+const byte r2m2=6;
+byte rm1=0,rm2=0;
+
+void setup() {
+  pinMode(am1,OUTPUT);
+  pinMode(am2,OUTPUT);
+  pinMode(r1m1,OUTPUT);
+  pinMode(r2m1,OUTPUT);
+  pinMode(r1m2,OUTPUT);
+  pinMode(r2m2,OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+char con;
+con=Serial.read();
+  digitalWrite(r1m1,HIGH);
+  digitalWrite(r2m1,LOW);
+  
+  digitalWrite(r1m2,HIGH);
+  digitalWrite(r2m2,LOW);
+  analogWrite(am1,rm1);analogWrite(am2,rm2);
+if(con=='w'){
+
+if(rm1<=245&&rm2<=245){
+  if(rm1==rm2){
+    if(rm1==0){rm1=100;rm2=100;}
+    rm1+=10;rm2+=10;
+  }
+  if(rm1>rm2){
+    rm1=rm2;
+    rm1+=10;rm2+=10;
+  }
+  if(rm1<rm2){
+    rm2=rm1;
+    rm1+=10;rm2+=10;
+  }
+  
+}
+}
+if(con=='q'){
+rm1=0;rm2=0;
+}
+if(con=='s'){
+
+if(rm1>=10&&rm2<=10){
+  if(rm1==rm2){
+    rm1+=10;rm2+=10;
+  }
+  if(rm1>rm2){
+    rm1=rm2;
+    rm1+=10;rm2+=10;
+  }
+  if(rm1<rm2){
+    rm2=rm1;
+    rm1+=10;rm2+=10;
+  }
+  
+}
+}
+}
