@@ -1,0 +1,183 @@
+//motor haye jelo R/L
+const byte pamrj=3;
+const byte pamlj=4;
+const byte pr1mrj=22;
+const byte pr2mrj=23;
+const byte pr1mlj=26;
+const byte pr2mlj=27;
+//motor haye bala R/L
+const byte pamru=5;
+const byte pamlu=6;
+const byte pr1mru=30;
+const byte pr2mru=31;
+const byte pr1mlu=28;
+const byte pr2mlu=29;
+//motor aghab
+const byte pr1ma=7;
+const byte pr2ma=8;
+//motor state and speed
+byte smrj=0;
+byte tmrj=0;
+byte smlj=0;
+byte tmlj=0;
+byte smru=0;
+byte tmru=0;
+byte smlu=0;
+byte tmlu=0;
+byte sma=0;
+byte tma=0;
+void setup(){
+  pinMode(pamrj,OUTPUT);
+  pinMode(pamlj,OUTPUT);
+  pinMode(pr1mrj,OUTPUT);
+  pinMode(pr2mrj,OUTPUT);
+  pinMode(pr1mlj,OUTPUT);
+  pinMode(pr2mlj,OUTPUT);
+  pinMode(pamru,OUTPUT);
+  pinMode(pamlu,OUTPUT);
+  pinMode(pr1mru,OUTPUT);
+  pinMode(pr2mru,OUTPUT);
+  pinMode(pr1mlu,OUTPUT);
+  pinMode(pr2mlu,OUTPUT);
+  pinMode(pr1ma,OUTPUT);
+ pinMode(pr2ma,OUTPUT);
+ Serial.begin(9600);
+ }
+void loop(){
+  char in;
+  int r;
+  if(Serial.available()>0){
+  String input = Serial.readStringUntil('>');
+in = input[0];
+  char rc[2]={input[1],input[2]};
+ r=atoi(rc);
+ if(r!=0){
+r=map(r,0,99,100,255);}
+   delay(5);
+    Serial.read();
+    }
+if(in=='w'){
+
+      mrj(&smrj,&tmrj,r,1);mlj(&smlj,&tmlj,r,1);
+}
+
+
+
+
+if(in=='s'){
+
+
+      mrj(&smrj,&tmrj,r,2);mlj(&smlj,&tmlj,r,2);
+}
+
+
+
+if(in=='u'){
+
+  if(smlu<125||smru<125){
+      mru(&smru,&tmru,125,1);mlu(&smlu,&tmlu,125,1);mlu(&sma,&tma,125,1);
+
+  }
+  if((smlu>=125||smru>=125)&&(smlu<255&&smru<255)){
+      mru(&smru,&tmru,smru+10,1);mlu(&smlu,&tmlu,smlu+10,1);ma(&sma,&tma,sma+10,1);
+  }
+}
+
+if(in=='q'){
+  mrj(&smrj,&tmrj,0,0);mlj(&smlj,&tmlj,0,0);
+}
+//Serial.println(smrj);
+}
+
+
+void mrj(byte* add_smrj,byte* add_tmrj,byte news,byte newt){
+  if(news==0||newt==0){
+digitalWrite(pr1mrj,LOW);
+digitalWrite(pr2mrj,LOW);
+analogWrite(pamrj,0);
+*add_tmrj=0;*add_smrj=0;
+
+  }
+  if(newt==1){
+digitalWrite(pr1mrj,LOW);
+digitalWrite(pr2mrj,HIGH);
+analogWrite(pamrj,news);
+*add_smrj=news;*add_tmrj=1;
+  }
+    if(newt==2){
+digitalWrite(pr2mrj,LOW);
+digitalWrite(pr1mrj,HIGH);
+analogWrite(pamrj,news);
+*add_smrj=news;*add_tmrj=2;
+}
+
+}
+void mlj(byte* add_smlj,byte* add_tmlj,byte news,byte newt){
+  if(news==0||newt==0){
+digitalWrite(pr1mlj,LOW);
+digitalWrite(pr2mlj,LOW);
+analogWrite(pamlj,0);
+*add_tmlj=0;*add_smlj=0;
+  }
+  if(newt==1){
+digitalWrite(pr1mlj,LOW);
+digitalWrite(pr2mlj,HIGH);
+analogWrite(pamlj,news);
+*add_smlj=news;*add_tmlj=1;
+//Serial.println(smlj);
+  }
+    if(newt==2){
+digitalWrite(pr2mlj,LOW);
+digitalWrite(pr1mlj,HIGH);
+analogWrite(pamlj,news);
+*add_smlj=news;*add_tmlj=2;
+}}
+void mru(byte* add_smru,byte* add_tmru,byte news,byte newt){
+  if(news==0||newt==0){
+digitalWrite(pr1mru,LOW);
+digitalWrite(pr2mru,LOW);
+analogWrite(pamru,0);
+*add_tmru=0;*add_smru=0;
+  }
+  if(newt==1){
+digitalWrite(pr1mru,LOW);
+digitalWrite(pr2mru,HIGH);
+analogWrite(pamru,news);
+*add_smru=news;*add_tmru=1;
+  }
+    if(newt==2){
+digitalWrite(pr2mru,LOW);
+digitalWrite(pr1mru,HIGH);
+analogWrite(pamru,news);
+*add_smru=news;*add_tmru=2;
+}}
+void mlu(byte* add_smlu,byte* add_tmlu,byte news,byte newt){
+  if(news==0||newt==0){
+digitalWrite(pr1mlu,LOW);
+digitalWrite(pr2mlu,LOW);
+analogWrite(pamlu,0);
+*add_tmlu=0;*add_smlu=0;
+  }
+  if(newt==1){
+digitalWrite(pr1mlu,LOW);
+digitalWrite(pr2mlu,HIGH);
+analogWrite(pamlu,news);
+*add_smlu=news;*add_tmlu=1;
+  }
+    if(newt==2){
+digitalWrite(pr2mlu,LOW);
+digitalWrite(pr1mlu,HIGH);
+analogWrite(pamlu,news);
+*add_smlu=news;*add_tmlu=2;
+}}
+void ma(byte* add_sma,byte* add_tma,byte news,byte newt){
+  if(news==0||newt==0){
+    analogWrite(pr1ma,0);
+    analogWrite(pr2ma,0);
+  }
+  if(newt==1){
+analogWrite(pr1ma,0);
+analogWrite(pr2ma,news);
+*add_sma=news;*add_tma=newt;
+  }
+}
