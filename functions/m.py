@@ -17,6 +17,17 @@ def tra(fl):
     if fl==0:
         return "00"
 #---------------------------------------
+def wasd(x,y):
+    if x>0.6 and abs(y)<0.3:
+        return 'd'
+    if x<-0.6 and abs(y)<0.3:
+        return 'a'
+    if y>0.6 and abs(x)<0.3:
+        return 'w'
+    if y<-0.6 and abs(x)<0.3:
+        return 's'
+    return None
+#----------------------------------------
 def write_read(x):
     arduino.write(bytes(x, 'utf-8'))
     time.sleep(0.05)
@@ -128,17 +139,11 @@ if __name__ == '__main__':
     while True:
         rea=joy.read()
         rpm=tra(rea[4])
-        if rea[1]<-0.3 and int(rpm)!=0:
-            print("s"+rpm+">")
-            value = write_read("s"+rpm+">")
+        if wasd(rea[0],rea[1])!=None and int(rpm)!=0:
+            print(wasd(rea[0],rea[1])+rpm+">")
+            value = write_read(wasd(rea[0],rea[1])+rpm+">")
             #print(value)
             sat=1
-        if rea[1]>0.3 and int(rpm)!=0 :
-            print("w"+rpm+">")
-            value = write_read("w"+rpm+">")
-            #print(value)
-            sat=1
-            #----------------------------
         if abs(rea[1])<0.1 or int(rpm)==0: 
             if sat!=0:
                 value = write_read('x00>')
