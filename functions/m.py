@@ -144,7 +144,7 @@ if __name__ == '__main__':
             value = write_read(wasd(rea[0],rea[1])+rpm+">")
             #print(value)
             sat=1
-        if abs(rea[1])<0.1 or int(rpm)==0: 
+        if wasd(rea[0],rea[1])==None or int(rpm)==0: 
             if sat!=0:
                 value = write_read('x00>')
                 #print(value)
