@@ -18,15 +18,32 @@ def tra(fl):
         return "00"
 #---------------------------------------
 def wasd(x,y):
-    if x>0.6 and abs(y)<0.3:
+    if x>=0.5 and abs(y)<0.3:
         return 'd'
-    if x<-0.6 and abs(y)<0.3:
+    if x<=-0.5 and abs(y)<0.3:
         return 'a'
-    if y>0.6 and abs(x)<0.3:
+    if y>=0.5 and abs(x)<0.3:
         return 'w'
-    if y<-0.6 and abs(x)<0.3:
+    if y<=-0.5 and abs(x)<0.3:
         return 's'
-    return None
+    if x<=-0.3 and y>=0.3:
+        return 'q'
+    if x>=0.3 and y>=0.3:
+        return 'e'
+    if x<=-0.3 and y<=-0.3:
+        return 'z'
+    if x>=0.3 and y<=-0.3:
+        return 'c'
+    
+    return 'x'
+#----------------------------------------
+def updown(x,y):
+    if y>=0.5 and abs(x)<0.3:
+        return 'u'
+    if y<=-0.5 and abs(x)<0.3:
+        return 'j'
+    return 'i'
+
 #----------------------------------------
 def write_read(x):
     arduino.write(bytes(x, 'utf-8'))
@@ -83,7 +100,7 @@ class XboxController(object):
         bd=self.DownDPad
         bl=self.LeftDPad
         br=self.RightDPad
-        return [lx, ly, a, b, rt]
+        return [lx, ly, a, b, rt,rx,ry]
 
 
     def _monitor_controller(self):
@@ -139,17 +156,17 @@ if __name__ == '__main__':
     while True:
         rea=joy.read()
         rpm=tra(rea[4])
-        if wasd(rea[0],rea[1])!=None and int(rpm)!=0:
-            print(wasd(rea[0],rea[1])+rpm+">")
-            value = write_read(wasd(rea[0],rea[1])+rpm+">")
+        if wasd(rea[0],rea[1])!=None and int(rpm)!=0 or updown(rea[5],rea[6])!='i' :
+            print(wasd(rea[0],rea[1])+rpm+updown(rea[5],rea[6])+"140"+">")
+            value = write_read(wasd(rea[0],rea[1])+rpm+updown(rea[5],rea[6])+"140"+">")
             #print(value)
-            sat=1
-        if wasd(rea[0],rea[1])==None or int(rpm)==0: 
+            sat=2
+        if wasd(rea[0],rea[1])=='x' or int(rpm)==0: 
             if sat!=0:
-                value = write_read('x00>')
+                value = write_read('x00'+updown(rea[5],rea[6])+"140"+">")
                 #print(value)
-                sat=0
-                print("x00>")
+                sat-=1
+                print("x00"+updown(rea[5],rea[6])+"140"+">")
                 #--------------------------
         
         time.sleep(0.03)
