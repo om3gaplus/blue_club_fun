@@ -44,91 +44,50 @@ void setup(){
  Serial.begin(9600);
  }
 void loop(){
-  char in;
-  int r;
-  char ui;
-  int ur;
+  char jht;int srt;char blp;int sblp;//blp is bala & paieen and sblp is sorat and srt is sorat & jht is jahat
   if(Serial.available()>0){
   String input = Serial.readStringUntil('>');
-in = input[0];
-ui=input[3];
+jht = input[0];
+blp=input[3];
   char rc[2]={input[1],input[2]};
- r=atoi(rc);
+ srt=atoi(rc);
    char ru[2]={input[4],input[5]};
- ur=atoi(ru);
- if(r!=0){
-r=map(r,1,99,110,255);}
+ sblp=atoi(ru);
+ if(srt!=0){
+srt=map(srt,1,99,110,255);}
    delay(5);
     Serial.read();
+    jrl(jht,srt);ud(blp,sblp);
     }
-//****************************
-if(in=='w'){
 
-      mrj(r,1);mlj(r,1);
 }
-
-//*******************************
-
-
-if(in=='s'){
-
-
-      mrj(r,2);mlj(r,2);
+void jrl(char j,byte ri){
+switch(j){
+  case 'w':mrj(ri,1);mlj(ri,1);break;
+  case 's':mrj(ri,2);mlj(ri,2);break;
+  case 'd':mrj(ri,2);mlj(ri,1);break;
+  case 'a':mrj(ri,1);mlj(ri,2);break;
+//  *******************************
+  case 'q':mlj(ri/2,1);mrj(ri,1);break;
+  case 'e':mlj(ri,1);mrj(ri/2,1);break;
+  case 'z':mrj(ri,2);mlj(ri/2,2);break;
+  case 'c':mlj(ri,2);mrj(ri/2,2);break;
+//  **************************************
+  case 'x':mrj(0,0);mlj(0,0);break;
+  default:break;
 }
-
-//*********************************
-
-if(ui=='u'){
-      mru(ur,1);mlu(ur,1);ma(ur,1);
-}
-
-//**********************************
-
-
-if(ui=='j'){
-      mru(ur,2);mlu(ur,2);ma(ur,2);
-}
-
-//**********************************
-
-
-if(ui=='i'){
-      mru(0,0);mlu(0,0);ma(0,0);
-}
-
-//**********************************
-if(in=='x'){
-  mrj(0,0);mlj(0,0);
-}
-//************************************
-if(in=='d'){
-  mrj(r,2);mlj(r,1);
   }
-//***********************************
-if(in=='a'){
-  mrj(r,1);mlj(r,2);
+//  ***********************************
+void ud(char ju,byte ru){
+  switch(ju){
+    case 'u':mru(ru,1);mlu(ru,1);ma(ru,1);break;
+    case 'j':mru(ru,2);mlu(ru,2);ma(ru,2);break;
+    case 'i':mru(0,0);mlu(0,0);ma(0,0);break;
+    default:break;
   }
-//***********************************
-if(in=='q'){
-  mlj(r/2,1);mrj(r,1);
+  
 }
-//**********************************
-if(in=='e'){
-  mlj(r,1);mrj(r/2,1);
-}
-//************************************
-if(in=='z'){
-  mrj(r,2);mlj(r/2,2);
-}
-//************************************
-if(in=='c'){
-  mlj(r,2);mrj(r/2,2);
-}
-//************************************
-
-}
-
-
+//*************************************motor R jolo
 void mrj(byte news,byte newt){
   if(news==0||newt==0){
 digitalWrite(pr1mrj,LOW);
@@ -151,6 +110,7 @@ smrj=news;tmrj=2;
 }
 
 }
+//*************************************motor L jolo
 void mlj(byte news,byte newt){
   if(news==0||newt==0){
 digitalWrite(pr1mlj,LOW);
@@ -171,6 +131,7 @@ digitalWrite(pr1mlj,HIGH);
 analogWrite(pamlj,news);
 smlj=news;tmlj=2;
 }}
+//************************************motor R bala
 void mru(byte news,byte newt){
   if(news==0||newt==0){
 digitalWrite(pr1mru,LOW);
@@ -190,6 +151,7 @@ digitalWrite(pr1mru,HIGH);
 analogWrite(pamru,news);
 smru=news;tmru=2;
 }}
+//*****************************************motor L bala
 void mlu(byte news,byte newt){
   if(news==0||newt==0){
 digitalWrite(pr1mlu,LOW);
@@ -209,6 +171,7 @@ digitalWrite(pr1mlu,HIGH);
 analogWrite(pamlu,news);
 smlu=news;tmlu=2;
 }}
+//*******************************************motor aghab
 void ma(byte news,byte newt){
   if(news==0||newt==0){
     analogWrite(pr1ma,0);
