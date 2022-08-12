@@ -41,20 +41,25 @@ void setup(){
   pinMode(pr2mlu,OUTPUT);
   pinMode(pr1ma,OUTPUT);
  pinMode(pr2ma,OUTPUT);
- Serial3.begin(9600);
+ Serial.begin(9600);
  }
 void loop(){
   char in;
   int r;
-  if(Serial3.available()>0){
-  String input = Serial3.readStringUntil('>');
+  char ui;
+  int ur;
+  if(Serial.available()>0){
+  String input = Serial.readStringUntil('>');
 in = input[0];
+ui=input[3];
   char rc[2]={input[1],input[2]};
  r=atoi(rc);
+   char ru[2]={input[4],input[5]};
+ ur=atoi(ru);
  if(r!=0){
 r=map(r,1,99,110,255);}
    delay(5);
-    Serial3.read();
+    Serial.read();
     }
 //****************************
 if(in=='w'){
@@ -73,21 +78,21 @@ if(in=='s'){
 
 //*********************************
 
-if(in=='u'){
-      mru(r,1);mlu(r,1);ma(r,1);
+if(ui=='u'){
+      mru(ur,1);mlu(ur,1);ma(ur,1);
 }
 
 //**********************************
 
 
-if(in=='j'){
-      mru(r,2);mlu(r,2);ma(r,2);
+if(ui=='j'){
+      mru(ur,2);mlu(ur,2);ma(ur,2);
 }
 
 //**********************************
 
 
-if(in=='i'){
+if(ui=='i'){
       mru(0,0);mlu(0,0);ma(0,0);
 }
 
@@ -158,7 +163,7 @@ digitalWrite(pr1mlj,LOW);
 digitalWrite(pr2mlj,HIGH);
 analogWrite(pamlj,news);
 smlj=news;tmlj=1;
-//Serial3.println(smlj);
+//Serial.println(smlj);
   }
     if(newt==2){
 digitalWrite(pr2mlj,LOW);
