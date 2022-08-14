@@ -44,8 +44,6 @@ blp=input[3];
  srt=atoi(rc);
    char ru[2]={input[4],input[5]};
  sblp=atoi(ru);
-// if(srt!=0){
-//srt=map(srt,1,99,110,255);}
    delay(5);
     Serial.read();
     jrl(jht,srt);ud(blp,sblp);
@@ -93,7 +91,7 @@ smrj=news;tmrj=1;
   }
     if(newt==2){
     mtrj.writeMicroseconds(map(news,1,99,1460,1000));
-    Serial.println(map(news,1,99,1460,1000))
+    Serial.println(map(news,1,99,1460,1000));
 smrj=news;tmrj=2;
 }
 
