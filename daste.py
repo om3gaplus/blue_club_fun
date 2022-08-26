@@ -27,12 +27,22 @@ try:
                 sig="p"
             if int(rea[10])==1:
                 sig="y"
+            if int(rea[11])==1:
+                gcommand()
         else:
             sig="n"
         return (dast+sig+">")
+    def gcommand():
+        gc=1
+        while gc==1:
+            co=str(input("input command: "))
+            if co=="esc":
+                return
+            else:
+                value = write_read(co+">")
     from inputs import get_gamepad
     sat=int(1)
-    arduino = serial.Serial(port='COM17', baudrate=9600, timeout=0.001)
+    arduino = serial.Serial(port='COM15', baudrate=9600, timeout=0.001)
     #--------------------------------------
     def tra(fl):
         fl=int((fl-(fl%0.01))*100)
@@ -127,7 +137,7 @@ try:
             bd=self.DownDPad
             bl=self.LeftDPad
             br=self.RightDPad
-            return [lx, ly, a, b, rt,rx,ry,y,b,a,x]
+            return [lx, ly, a, b, rt,rx,ry,y,b,a,x,bb]
 
 
         def _monitor_controller(self):
