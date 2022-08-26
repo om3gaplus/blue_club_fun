@@ -7,29 +7,32 @@ lasttime=time.time()
 lastc="."
 try:
     def make_command(rea):
+        sat=0
+        dast="x00i00"
         rpm=tra(rea[4])
+        sig="n"
         if wasd(rea[0],rea[1])!=None and int(rpm)!=0 or updown(rea[5],rea[6])!='i' :
             dast=(wasd(rea[0],rea[1])+rpm+updown(rea[5],rea[6])+"00")
             sat=2
-        if wasd(rea[0],rea[1])=='x' or int(rpm)==0: 
-            if sat!=0:
+        if wasd(rea[0],rea[1])=='x' or int(rpm)==0 or int(rea[7])!=0 or int(rea[8])!=0 or int(rea[9])!=0 or int(rea[10])!=0: 
+            if sat!=0 or int(rea[7])!=0 or int(rea[8])!=0 or int(rea[9])!=0 or int(rea[10])!=0:
                 dast=('x00'+updown(rea[5],rea[6])+"00")
                 sat-=1
         if (float(time.time())-float(lasttime))>0.5:
             if int(rea[7])==1:
-                sig="y"
+                sig="n"
             if int(rea[8])==1:
                 sig="r"
             if int(rea[9])==1:
                 sig="p"
             if int(rea[10])==1:
-                sig="n"
-        else():
-            sig='n'
+                sig="y"
+        else:
+            sig="n"
         return (dast+sig+">")
     from inputs import get_gamepad
     sat=int(1)
-    arduino = serial.Serial(port='COM15', baudrate=9600, timeout=0.001)
+    arduino = serial.Serial(port='COM17', baudrate=9600, timeout=0.001)
     #--------------------------------------
     def tra(fl):
         fl=int((fl-(fl%0.01))*100)
@@ -180,11 +183,9 @@ try:
         while True:
             rea=joy.read()
             cc=make_command(rea)
-            if(cc=!lastc):
-                value = write_read(cc.encode())
+            if(cc!=lastc):
+                value = write_read(cc)
                 print(cc)
                 lastc=cc
             time.sleep(0.03)
-
-except:
-    print("error")
+except Exception as e: print(e)
