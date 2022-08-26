@@ -5,6 +5,7 @@ import time
 import serial
 lasttime=time.time()
 lastc="."
+ardport=str(int(input("input the number of arduino port: ")))
 try:
     def make_command(rea):
         sat=0
@@ -42,7 +43,7 @@ try:
                 value = write_read(co+">")
     from inputs import get_gamepad
     sat=int(1)
-    arduino = serial.Serial(port='COM15', baudrate=9600, timeout=0.001)
+    arduino = serial.Serial(port='COM'+ardport, baudrate=9600, timeout=0.001)
     #--------------------------------------
     def tra(fl):
         fl=int((fl-(fl%0.01))*100)
