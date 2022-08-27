@@ -197,6 +197,13 @@ try:
             cc=make_command(rea)
             if(cc!=lastc):
                 value = write_read(cc)
+                if cc=="x00i00":
+                    value = write_read(cc)
+                    time.sleep(0.01)
+                    value = write_read(cc)
+                    time.sleep(0.01)
+                    value = write_read(cc)
+                    time.sleep(0.01)
                 print(cc)
                 lastc=cc
             time.sleep(0.03)
