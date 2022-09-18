@@ -42,6 +42,7 @@ void setup() {
   Serial.begin(115200);
   Wire.begin();
   mpu6050.begin();
+  pinMode(led_pin, OUTPUT);
   mpu6050.calcGyroOffsets(false);
   mtrj.attach(pmrj);
   mtlj.attach(pmlj);
@@ -71,7 +72,6 @@ void loop() {
       srt = (tempin.toInt());
       tempin = ((String)input[4] + input[5]);
       sblp = (tempin.toInt());
-
       one_char(input[6]);
       //      gy_on_off(input[6]);
       delay(5);
@@ -121,11 +121,14 @@ void ud(char ju, byte ru, bool at) {
 //*********************************************************************
 void one_char(char in) {
   String tempo; byte vol = 0;
-  if (in != '0' || in != '1' || in != '2' || in != '3' || in != '4' || in != '5' || in != '6' || in != '7' || in != '8' || in != '9' ) {
+  if (!(in == '0'|| in == '1' || in == '2' || in == '3' || in == '4' || in == '5' || in == '6' || in == '7' || in == '8' || in == '9') ) {
     gy_on_off(in);
+    Serial.println("gy in");
   }
-  else {
+  
+ if(in == '0'|| in == '1' || in == '2' || in == '3' || in == '4' || in == '5' || in == '6' || in == '7' || in == '8' || in == '9') {
     tempo = ((String)in);
+    Serial.println("its in");
     vol = (tempo.toInt());
     led_volume(vol);
   }
@@ -472,8 +475,10 @@ void ma(byte news, byte newt) {
 void led_volume(byte volume) {
   if (volume == 0) {
     analogWrite(led_pin, 0);
+    Serial.println("led_off");
   }
   else {
-    analogWrite(led_pin, map(volume, 1, 9, 80, 255));
+    analogWrite(led_pin, map(volume, 1, 9, 20, 255));
+    Serial.println("led_on");
   }
 }
