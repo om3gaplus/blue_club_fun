@@ -24,7 +24,6 @@ try:
         global cruse_d
         global cruse_s
         global lasttime
-        global led_volume
         sig="n"
         if wasd(rea[0],rea[1])!=None and int(rpm)!=0 :
             dast=(wasd(rea[0],rea[1])+rpm+cru(uspeed))
@@ -76,7 +75,7 @@ try:
             return
     from inputs import get_gamepad
     sat=int(1)
-    arduino = serial.Serial(port='COM'+ardport, baudrate=9600, timeout=0.001)
+    arduino = serial.Serial(port='COM'+ardport, baudrate=115200, timeout=0.001)
     #--------------------------------------
     def tra(fl):
         fl=int((fl-(fl%0.01))*100)
@@ -98,6 +97,8 @@ try:
             led_volume-=dx
         if led_volume==9 and dx>0:
             led_volume-=dx
+        if (led_volume ==0 or led_volume==9):
+            en_vib()
         return str(led_volume)
     #---------------------------------------
     def en_vib(gamepad=None):
