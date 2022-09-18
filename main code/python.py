@@ -24,6 +24,7 @@ try:
         global cruse_d
         global cruse_s
         global lasttime
+        global led_volume
         sig="n"
         if wasd(rea[0],rea[1])!=None and int(rpm)!=0 :
             dast=(wasd(rea[0],rea[1])+rpm+cru(uspeed))
@@ -92,11 +93,11 @@ try:
         global led_volume
         dx=int(x)
         if led_volume >0 and led_volume<9:
-            led_volume+=dx
-        if led_volume==0 and dx >0:
-            led_voume+=dx
-        if led_volume==9 and dx<0:
-            led_volume+=dx
+            led_volume-=dx
+        if led_volume==0 and dx <0:
+            led_volume-=dx
+        if led_volume==9 and dx>0:
+            led_volume-=dx
         return str(led_volume)
     #---------------------------------------
     def en_vib(gamepad=None):
