@@ -3,7 +3,7 @@
 #include <Wire.h>
 //libs
 float tacx = 0, tacy = 0, tacz = 0, ax = 0, ay = 0, az = 0, last_z = 0;
-byte cmrj = 1, ccmrj = 2, cmlj = 1, ccmlj = 2, cmru = 1, ccmru = 2, cmlu = 1, ccmlu = 2, cma = 1, ccma = 2;
+byte cmrj = 2, ccmrj = 1, cmlj = 2, ccmlj = 1, cmru = 2, ccmru = 1, cmlu = 2, ccmlu = 1, cma = 2, ccma = 1;
 byte zarib_yaw = 5;
 byte zarib_roll = 8;
 byte zarib_pitch = 8;
@@ -16,8 +16,11 @@ bool is_stop = true;
 bool gy_roll = false;
 bool gy_yaw = false;
 bool gy_pitch = false;
+byte p_ms = 13;
+byte p_r1ms = 22;
+byte p_r2ms = 23;
 MPU6050 mpu6050(Wire);
-byte led_pin = 3;
+byte led_pin = 7;
 //motor haye jelo R/L
 const byte pmrj = 8;
 const byte pmlj = 9;
@@ -39,7 +42,7 @@ byte sma = 0;
 byte tma = 0;
 Servo mtrj, mtlj, mtlu, mtru, mta;
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(9600);
   Wire.begin();
   mpu6050.begin();
   pinMode(led_pin, OUTPUT);
@@ -97,12 +100,25 @@ void jrl(char j, byte ri, bool at) {
     case 'd': mrj(ri, ccmrj); mlj(ri, cmlj); if (at)move_signal(); break;
     case 'a': mrj(ri, cmrj); mlj(ri, ccmlj); if (at)move_signal(); break;
     //  *******************************
-    case 'q': mlj(ri / 2, cmlj); mrj(ri, cmrj); if (at)move_signal(); break;
-    case 'e': mlj(ri, cmlj); mrj(ri / 2, cmrj); if (at)move_signal(); break;
-    case 'z': mrj(ri, ccmrj); mlj(ri / 2, ccmlj); if (at)move_signal(); break;
-    case 'c': mlj(ri, ccmlj); mrj(ri / 2, ccmrj); if (at)move_signal(); break;
+    case 'q': mlj(ri / 3, cmlj); mrj(ri, cmrj); if (at)move_signal(); break;
+    case 'e': mlj(ri, cmlj); mrj(ri / 3, cmrj); if (at)move_signal(); break;
+    case 'z': mrj(ri, ccmrj); mlj(ri / 3, ccmlj); if (at)move_signal(); break;
+    case 'c': mlj(ri, ccmlj); mrj(ri / 3, ccmrj); if (at)move_signal(); break;
     //  **************************************
     case 'x': mrj(0, 0); mlj(0, 0); if (at)stop_signal(); break;
+    //+++++++++++++++++===============++++++++++++++++++++++++++++======+++++++++++====================
+    case 'i': mrj(ri, cmrj); mlj(ri, cmlj); mru(ri, cmru); mlu(ri, cmlu); if (at)move_signal(); break;
+    case 'k': mrj(ri, ccmrj); mlj(ri, ccmlj); mru(ri, ccmru); mlu(ri, ccmlu); if (at)move_signal(); break;
+    case 'l': mrj(ri, ccmrj); mlj(ri, cmlj); mru(ri, ccmru); mlu(ri, cmlu); if (at)move_signal(); break;
+    case 'j': mrj(ri, cmrj); mlj(ri, ccmlj); mru(ri, cmru); mlu(ri, ccmlu); if (at)move_signal(); break;
+    //  *******************************
+    case 'u': mlj(ri / 3, cmlj); mrj(ri, cmrj); mlu(ri / 3, cmlu); mru(ri, cmru); if (at)move_signal(); break;
+    case 'o': mlj(ri, cmlj); mrj(ri / 3, cmrj); mlu(ri, cmlu); mru(ri / 3, cmru); if (at)move_signal(); break;
+    case 'n': mrj(ri, ccmrj); mlj(ri / 3, ccmlj); mru(ri, ccmru); mlu(ri / 3, ccmlu); if (at)move_signal(); break;
+    case 'm': mlj(ri, ccmlj); mrj(ri / 3, ccmrj); mlu(ri, ccmlu); mru(ri / 3, ccmru); if (at)move_signal(); break;
+    //  **************************************
+    case 'p': mrj(0, 0); mlj(0, 0); mru(0, 0); mlu(0, 0); if (at)stop_signal(); break;
+    //++++++++++++++++=============++++++++++++++===========++++++++++++++++++
     default: break;
   }
 }
@@ -112,6 +128,9 @@ void ud(char ju, byte ru, bool at) {
     case 'u': mru(ru * 0.6, cmru); mlu(ru * 0.6, cmlu); ma(ru, cma); break;
     case 'j': mru(ru * 0.6, ccmru); mlu(ru * 0.6, ccmlu); ma(ru, ccma); break;
     case 'i': mru(0, 0); mlu(0, 0); ma(0, 0); break;
+    case 'w': ma(ru, cma); break;
+    case 's': ma(ru, ccma); break;
+    case 'x': ma(0, 0); break;
     default: break;
   }
 
@@ -121,12 +140,12 @@ void ud(char ju, byte ru, bool at) {
 //*********************************************************************
 void one_char(char in) {
   String tempo; byte vol = 0;
-  if (!(in == '0'|| in == '1' || in == '2' || in == '3' || in == '4' || in == '5' || in == '6' || in == '7' || in == '8' || in == '9') ) {
-    gy_on_off(in);
+  if (!(in == '0' || in == '1' || in == '2' || in == '3' || in == '4' || in == '5' || in == '6' || in == '7' || in == '8' || in == '9') ) {
+    gy_on_off(in); motor_sport(in);
     Serial.println("gy in");
   }
-  
- if(in == '0'|| in == '1' || in == '2' || in == '3' || in == '4' || in == '5' || in == '6' || in == '7' || in == '8' || in == '9') {
+
+  if (in == '0' || in == '1' || in == '2' || in == '3' || in == '4' || in == '5' || in == '6' || in == '7' || in == '8' || in == '9') {
     tempo = ((String)in);
     Serial.println("its in");
     vol = (tempo.toInt());
@@ -480,5 +499,22 @@ void led_volume(byte volume) {
   else {
     analogWrite(led_pin, map(volume, 1, 9, 20, 255));
     Serial.println("led_on");
+  }
+}
+//=================================================================
+void motor_sport(char in) {
+  switch (in) {
+    case 'w':
+      digitalWrite(p_r1ms, LOW);
+      digitalWrite(p_r2ms, HIGH);
+      analogWrite(p_ms, 255); break;
+    case 's':
+      digitalWrite(p_r1ms, HIGH);
+      digitalWrite(p_r2ms, LOW);
+      analogWrite(p_ms, 255); break;
+    case 'n':
+      digitalWrite(p_r1ms, LOW);
+      digitalWrite(p_r1ms, LOW);
+      analogWrite(p_ms, 0); break;
   }
 }
