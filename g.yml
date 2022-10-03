@@ -1,0 +1,1196 @@
+mixed-port: 7890
+allow-lan: false
+mode: Global
+log-level: silent
+external-controller: 127.0.0.1:9090
+dns:
+  enable: true
+  ipv6: false
+  listen: 0.0.0.0:53
+  enhanced-mode: redir-host
+  nameserver:
+    - https://1.1.1.1/dns-query
+    - https://8.8.8.8/dns-query
+  fallback:
+    - https://1.0.0.1/dns-query
+    - https://8.8.4.4/dns-query
+    - 1.1.1.1
+    - 8.8.8.8
+proxies:
+  - name: France (FR)1
+    server: 51.38.118.42
+    port: 811
+    type: ss
+    cipher: chacha20-ietf-poly1305
+    password: Ultr@r00t_2017
+  - name: United States (US)Dallas1
+    server: 38.68.134.85
+    port: 443
+    type: ss
+    cipher: aes-256-gcm
+    password: pKEW8JPByTVTLtM
+  - name: United States (US)Dallas2
+    server: 38.68.134.85
+    port: 8118
+    type: ss
+    cipher: aes-256-gcm
+    password: cdBIDV42DCwnfIN
+  - name: Japan (JP)Tokyo1
+    server: 85.208.108.20
+    port: 6379
+    type: ss
+    cipher: aes-256-gcm
+    password: zDNVedRFPQexG9v
+  - name: Japan (JP)Tokyo2
+    server: 85.208.108.20
+    port: 6679
+    type: ss
+    cipher: aes-256-gcm
+    password: TEzjfAYq2IjtuoS
+  - name: Japan (JP)Tokyo3
+    server: 85.208.108.20
+    port: 6697
+    type: ss
+    cipher: aes-256-gcm
+    password: TEzjfAYq2IjtuoS
+  - name: Japan (JP)Tokyo4
+    server: 85.208.108.20
+    port: 7002
+    type: ss
+    cipher: aes-256-gcm
+    password: RexnBgU7EV5ADxG
+  - name: Japan (JP)Tokyo5
+    server: 85.208.108.60
+    port: 8882
+    type: ss
+    cipher: aes-256-gcm
+    password: kDWvXYZoTBcGkC4
+  - name: United States (US)Dallas3
+    server: 38.68.134.85
+    port: 5601
+    type: ss
+    cipher: aes-256-gcm
+    password: Y6R9pAtvxxzmGC
+  - name: United States (US)Dallas4
+    server: 38.68.134.85
+    port: 5500
+    type: ss
+    cipher: aes-256-gcm
+    password: KixLvKzwjekG00rm
+  - name: United States (US)Dallas5
+    server: 38.68.134.85
+    port: 7001
+    type: ss
+    cipher: aes-256-gcm
+    password: RexnBgU7EV5ADxG
+  - name: United States (US)Dallas6
+    server: 38.68.134.85
+    port: 6379
+    type: ss
+    cipher: aes-256-gcm
+    password: zDNVedRFPQexG9v
+  - name: United States (US)Dallas7
+    server: 38.68.134.85
+    port: 8882
+    type: ss
+    cipher: aes-256-gcm
+    password: kDWvXYZoTBcGkC4
+  - name: United States (US)Dallas8
+    server: 38.68.134.85
+    port: 6697
+    type: ss
+    cipher: aes-256-gcm
+    password: TEzjfAYq2IjtuoS
+  - name: United States (US)Dallas9
+    server: 38.68.134.85
+    port: 8119
+    type: ss
+    cipher: aes-256-gcm
+    password: cdBIDV42DCwnfIN
+  - name: United States (US)Dallas10
+    server: 38.68.134.85
+    port: 9102
+    type: ss
+    cipher: aes-256-gcm
+    password: e4FCWrgpkji3QY
+  - name: United States (US)Dallas11
+    server: 38.68.134.85
+    port: 5600
+    type: ss
+    cipher: aes-256-gcm
+    password: Y6R9pAtvxxzmGC
+  - name: United States (US)Dallas12
+    server: 38.68.134.85
+    port: 8009
+    type: ss
+    cipher: aes-256-gcm
+    password: XKFKl2rULjIp74
+  - name: United States (US)Dallas13
+    server: 38.68.134.85
+    port: 8091
+    type: ss
+    cipher: aes-256-gcm
+    password: PCnnH6SQSnfoS27
+  - name: United States (US)Dallas14
+    server: 38.68.134.196
+    port: 800
+    type: ss
+    cipher: chacha20-ietf-poly1305
+    password: G!yBwPWH3Vao
+  - name: United States (US)Dallas15
+    server: 38.68.134.196
+    port: 808
+    type: ss
+    cipher: chacha20-ietf-poly1305
+    password: G!yBwPWH3Vao
+  - name: United States (US)Chicago1
+    server: 162.251.61.47
+    port: 810
+    type: ss
+    cipher: chacha20-ietf-poly1305
+    password: G!yBwPWH3Vao
+  - name: Italy (IT)1
+    server: 84.33.193.79
+    port: 18760
+    type: ss
+    cipher: aes-256-gcm
+    password: hg49$WH8943g3
+  - name: Canada (CA)Ottawa1
+    server: 196.247.59.156
+    port: 804
+    type: ss
+    cipher: chacha20-ietf-poly1305
+    password: G!yBwPWH3Vao
+  - name: Japan (JP)Tokyo6
+    server: 85.208.108.20
+    port: 5601
+    type: ss
+    cipher: aes-256-gcm
+    password: Y6R9pAtvxxzmGC
+  - name: Japan (JP)Tokyo7
+    server: 85.208.108.20
+    port: 6679
+    type: ss
+    cipher: aes-256-gcm
+    password: TEzjfAYq2IjtuoS
+  - name: Japan (JP)Tokyo8
+    server: 85.208.108.60
+    port: 8882
+    type: ss
+    cipher: aes-256-gcm
+    password: kDWvXYZoTBcGkC4
+  - name: Japan (JP)Tokyo9
+    server: 85.208.108.20
+    port: 7002
+    type: ss
+    cipher: aes-256-gcm
+    password: RexnBgU7EV5ADxG
+  - name: Japan (JP)Tokyo10
+    server: 85.208.108.20
+    port: 6379
+    type: ss
+    cipher: aes-256-gcm
+    password: zDNVedRFPQexG9v
+  - name: Japan (JP)Tokyo11
+    server: 85.208.108.20
+    port: 5601
+    type: ss
+    cipher: aes-256-gcm
+    password: Y6R9pAtvxxzmGC
+  - name: Japan (JP)Tokyo12
+    server: 85.208.108.20
+    port: 6697
+    type: ss
+    cipher: aes-256-gcm
+    password: TEzjfAYq2IjtuoS
+  - name: Japan (JP)Tokyo13
+    server: 85.208.108.20
+    port: 6679
+    type: ss
+    cipher: aes-256-gcm
+    password: TEzjfAYq2IjtuoS
+  - name: Japan (JP)Tokyo14
+    server: 85.208.108.20
+    port: 7002
+    type: ss
+    cipher: aes-256-gcm
+    password: RexnBgU7EV5ADxG
+  - name: Japan (JP)Tokyo15
+    server: 85.208.108.20
+    port: 6379
+    type: ss
+    cipher: aes-256-gcm
+    password: zDNVedRFPQexG9v
+  - name: Japan (JP)Tokyo16
+    server: 85.208.108.20
+    port: 6697
+    type: ss
+    cipher: aes-256-gcm
+    password: TEzjfAYq2IjtuoS
+  - name: Japan (JP)Tokyo17
+    server: 85.208.108.20
+    port: 6679
+    type: ss
+    cipher: aes-256-gcm
+    password: TEzjfAYq2IjtuoS
+  - name: Italy (IT)2
+    server: 84.33.193.79
+    port: 18760
+    type: ss
+    cipher: aes-256-gcm
+    password: hg49$WH8943g3
+  - name: United States (US)Dallas16
+    server: 38.68.134.196
+    port: 810
+    type: ss
+    cipher: chacha20-ietf-poly1305
+    password: G!yBwPWH3Vao
+  - name: United States (US)Dallas17
+    server: 38.68.134.85
+    port: 2375
+    type: ss
+    cipher: aes-256-gcm
+    password: faBAoD54k87UJG7
+  - name: United States (US)Dallas18
+    server: 38.68.134.85
+    port: 8008
+    type: ss
+    cipher: aes-256-gcm
+    password: XKFKl2rULjIp74
+  - name: United States (US)Dallas19
+    server: 38.68.134.85
+    port: 6379
+    type: ss
+    cipher: aes-256-gcm
+    password: zDNVedRFPQexG9v
+  - name: United States (US)Los Angeles1
+    server: 38.114.114.69
+    port: 8881
+    type: ss
+    cipher: aes-256-gcm
+    password: kDWvXYZoTBcGkC4
+  - name: Japan (JP)Tokyo18
+    server: 85.208.108.20
+    port: 7002
+    type: ss
+    cipher: aes-256-gcm
+    password: RexnBgU7EV5ADxG
+  - name: France (FR)2
+    server: 51.38.118.42
+    port: 811
+    type: ss
+    cipher: chacha20-ietf-poly1305
+    password: Ultr@r00t_2017
+  - name: United States (US)Dallas20
+    server: 38.68.134.85
+    port: 5600
+    type: ss
+    cipher: aes-256-gcm
+    password: Y6R9pAtvxxzmGC
+  - name: United States (US)Dallas21
+    server: 38.68.134.85
+    port: 7001
+    type: ss
+    cipher: aes-256-gcm
+    password: RexnBgU7EV5ADxG
+  - name: United States (US)Dallas22
+    server: 38.68.134.85
+    port: 5600
+    type: ss
+    cipher: aes-256-gcm
+    password: Y6R9pAtvxxzmGC
+  - name: United States (US)Atlanta1
+    server: 167.88.63.59
+    port: 8881
+    type: ss
+    cipher: aes-256-gcm
+    password: kDWvXYZoTBcGkC4
+  - name: France (FR)3
+    server: 51.38.118.42
+    port: 811
+    type: ss
+    cipher: chacha20-ietf-poly1305
+    password: Ultr@r00t_2017
+  - name: Japan (JP)Tokyo19
+    server: 85.208.108.20
+    port: 7002
+    type: ss
+    cipher: aes-256-gcm
+    password: RexnBgU7EV5ADxG
+  - name: United States (US)Los Angeles2
+    server: 38.114.114.69
+    port: 2376
+    type: ss
+    cipher: aes-256-gcm
+    password: faBAoD54k87UJG7
+  - name: United States (US)Dallas23
+    server: 38.68.134.85
+    port: 8009
+    type: ss
+    cipher: aes-256-gcm
+    password: XKFKl2rULjIp74
+  - name: United States (US)Dallas24
+    server: 38.68.134.196
+    port: 800
+    type: ss
+    cipher: chacha20-ietf-poly1305
+    password: G!yBwPWH3Vao
+  - name: United States (US)Atlanta2
+    server: 167.88.63.59
+    port: 8080
+    type: ss
+    cipher: aes-256-gcm
+    password: KixLvKzwjekG00rm
+  - name: United States (US)Dallas25
+    server: 38.68.134.85
+    port: 8091
+    type: ss
+    cipher: aes-256-gcm
+    password: PCnnH6SQSnfoS27
+  - name: Poland (PL)1
+    server: 194.15.196.106
+    port: 8882
+    type: ss
+    cipher: aes-256-gcm
+    password: kDWvXYZoTBcGkC4
+  - name: Italy (IT)Milan1
+    server: 158.58.173.240
+    port: 806
+    type: ss
+    cipher: chacha20-ietf-poly1305
+    password: G!yBwPWH3Vao
+  - name: Italy (IT)Milan2
+    server: 158.58.173.240
+    port: 812
+    type: ss
+    cipher: chacha20-ietf-poly1305
+    password: G!yBwPWH3Vao
+  - name: Poland (PL)2
+    server: 194.15.196.106
+    port: 5003
+    type: ss
+    cipher: aes-256-gcm
+    password: g5MeD6Ft3CWlJId
+  - name: Japan (JP)Tokyo20
+    server: 85.208.108.60
+    port: 8882
+    type: ss
+    cipher: aes-256-gcm
+    password: kDWvXYZoTBcGkC4
+  - name: Poland (PL)3
+    server: 194.15.196.106
+    port: 8882
+    type: ss
+    cipher: aes-256-gcm
+    password: kDWvXYZoTBcGkC4
+  - name: Japan (JP)Tokyo21
+    server: 85.208.108.60
+    port: 8882
+    type: ss
+    cipher: aes-256-gcm
+    password: kDWvXYZoTBcGkC4
+  - name: United States (US)Dallas26
+    server: 38.68.134.85
+    port: 443
+    type: ss
+    cipher: aes-256-gcm
+    password: pKEW8JPByTVTLtM
+  - name: Italy (IT)3
+    server: 84.33.193.79
+    port: 18760
+    type: ss
+    cipher: aes-256-gcm
+    password: hg49$WH8943g3
+  - name: United States (US)Los Angeles3
+    server: 38.75.136.21
+    port: 8881
+    type: ss
+    cipher: aes-256-gcm
+    password: kDWvXYZoTBcGkC4
+  - name: United States (US)Los Angeles4
+    server: 38.114.114.69
+    port: 8118
+    type: ss
+    cipher: aes-256-gcm
+    password: cdBIDV42DCwnfIN
+  - name: Poland (PL)4
+    server: 194.15.196.106
+    port: 5601
+    type: ss
+    cipher: aes-256-gcm
+    password: Y6R9pAtvxxzmGC
+  - name: United States (US)Dallas27
+    server: 38.68.134.85
+    port: 6679
+    type: ss
+    cipher: aes-256-gcm
+    password: TEzjfAYq2IjtuoS
+  - name: Japan (JP)Tokyo22
+    server: 85.208.108.20
+    port: 6379
+    type: ss
+    cipher: aes-256-gcm
+    password: zDNVedRFPQexG9v
+  - name: Japan (JP)Tokyo23
+    server: 85.208.108.60
+    port: 8882
+    type: ss
+    cipher: aes-256-gcm
+    password: kDWvXYZoTBcGkC4
+  - name: Italy (IT)Milan3
+    server: 158.58.173.240
+    port: 806
+    type: ss
+    cipher: chacha20-ietf-poly1305
+    password: G!yBwPWH3Vao
+  - name: United States (US)Dallas28
+    server: 38.68.134.85
+    port: 443
+    type: ss
+    cipher: aes-256-gcm
+    password: pKEW8JPByTVTLtM
+  - name: Japan (JP)Tokyo24
+    server: 85.208.108.20
+    port: 5601
+    type: ss
+    cipher: aes-256-gcm
+    password: Y6R9pAtvxxzmGC
+  - name: United States (US)Los Angeles5
+    server: 38.75.136.21
+    port: 6679
+    type: ss
+    cipher: aes-256-gcm
+    password: TEzjfAYq2IjtuoS
+  - name: France (FR)4
+    server: 51.38.118.42
+    port: 811
+    type: ss
+    cipher: chacha20-ietf-poly1305
+    password: Ultr@r00t_2017
+  - name: United States (US)Los Angeles6
+    server: 38.114.114.69
+    port: 443
+    type: ss
+    cipher: aes-256-gcm
+    password: pKEW8JPByTVTLtM
+  - name: United States (US)Dallas29
+    server: 38.68.134.196
+    port: 812
+    type: ss
+    cipher: chacha20-ietf-poly1305
+    password: G!yBwPWH3Vao
+  - name: France (FR)5
+    server: 51.38.118.42
+    port: 811
+    type: ss
+    cipher: chacha20-ietf-poly1305
+    password: Ultr@r00t_2017
+  - name: Japan (JP)Tokyo25
+    server: 85.208.108.20
+    port: 6679
+    type: ss
+    cipher: aes-256-gcm
+    password: TEzjfAYq2IjtuoS
+  - name: Japan (JP)Tokyo26
+    server: 85.208.108.20
+    port: 6379
+    type: ss
+    cipher: aes-256-gcm
+    password: zDNVedRFPQexG9v
+  - name: Japan (JP)Tokyo27
+    server: 85.208.108.20
+    port: 5601
+    type: ss
+    cipher: aes-256-gcm
+    password: Y6R9pAtvxxzmGC
+  - name: Japan (JP)Tokyo28
+    server: 85.208.108.20
+    port: 7002
+    type: ss
+    cipher: aes-256-gcm
+    password: RexnBgU7EV5ADxG
+  - name: United States (US)Dallas30
+    server: 38.68.134.85
+    port: 8090
+    type: ss
+    cipher: aes-256-gcm
+    password: PCnnH6SQSnfoS27
+  - name: United States (US)Los Angeles7
+    server: 38.114.114.69
+    port: 8119
+    type: ss
+    cipher: aes-256-gcm
+    password: cdBIDV42DCwnfIN
+  - name: Japan (JP)Tokyo29
+    server: 85.208.108.60
+    port: 8882
+    type: ss
+    cipher: aes-256-gcm
+    password: kDWvXYZoTBcGkC4
+  - name: Japan (JP)Tokyo30
+    server: 85.208.108.20
+    port: 7002
+    type: ss
+    cipher: aes-256-gcm
+    password: RexnBgU7EV5ADxG
+  - name: France (FR)6
+    server: 51.38.118.42
+    port: 811
+    type: ss
+    cipher: chacha20-ietf-poly1305
+    password: Ultr@r00t_2017
+  - name: Japan (JP)Tokyo31
+    server: 85.208.108.60
+    port: 8882
+    type: ss
+    cipher: aes-256-gcm
+    password: kDWvXYZoTBcGkC4
+  - name: Japan (JP)Tokyo32
+    server: 85.208.108.59
+    port: 9102
+    type: ss
+    cipher: aes-256-gcm
+    password: e4FCWrgpkji3QY
+  - name: Poland (PL)5
+    server: 194.15.196.78
+    port: 6679
+    type: ss
+    cipher: aes-256-gcm
+    password: TEzjfAYq2IjtuoS
+  - name: Japan (JP)Tokyo33
+    server: 85.208.108.59
+    port: 6679
+    type: ss
+    cipher: aes-256-gcm
+    password: TEzjfAYq2IjtuoS
+  - name: France (FR)7
+    server: 51.38.118.42
+    port: 811
+    type: ss
+    cipher: chacha20-ietf-poly1305
+    password: Ultr@r00t_2017
+  - name: Italy (IT)Milan4
+    server: 158.58.173.240
+    port: 806
+    type: ss
+    cipher: chacha20-ietf-poly1305
+    password: G!yBwPWH3Vao
+  - name: United States (US)Atlanta3
+    server: 167.88.63.59
+    port: 8881
+    type: ss
+    cipher: aes-256-gcm
+    password: kDWvXYZoTBcGkC4
+  - name: Canada (CA)Ottawa2
+    server: 196.247.59.156
+    port: 808
+    type: ss
+    cipher: chacha20-ietf-poly1305
+    password: G!yBwPWH3Vao
+  - name: United States (US)Chicago2
+    server: 162.251.61.47
+    port: 800
+    type: ss
+    cipher: chacha20-ietf-poly1305
+    password: G!yBwPWH3Vao
+  - name: United States (US)Atlanta4
+    server: 167.88.63.59
+    port: 443
+    type: ss
+    cipher: aes-256-gcm
+    password: pKEW8JPByTVTLtM
+  - name: Italy (IT)4
+    server: 84.33.193.79
+    port: 18760
+    type: ss
+    cipher: aes-256-gcm
+    password: hg49$WH8943g3
+  - name: Japan (JP)Tokyo34
+    server: 85.208.108.59
+    port: 6679
+    type: ss
+    cipher: aes-256-gcm
+    password: TEzjfAYq2IjtuoS
+  - name: United States (US)Atlanta5
+    server: 167.88.63.59
+    port: 8881
+    type: ss
+    cipher: aes-256-gcm
+    password: kDWvXYZoTBcGkC4
+  - name: France (FR)8
+    server: 51.38.118.42
+    port: 811
+    type: ss
+    cipher: chacha20-ietf-poly1305
+    password: Ultr@r00t_2017
+  - name: France (FR)9
+    server: 51.38.118.42
+    port: 811
+    type: ss
+    cipher: chacha20-ietf-poly1305
+    password: Ultr@r00t_2017
+  - name: France (FR)10
+    server: 51.38.118.42
+    port: 811
+    type: ss
+    cipher: chacha20-ietf-poly1305
+    password: Ultr@r00t_2017
+  - name: Japan (JP)Tokyo35
+    server: 85.208.108.21
+    port: 443
+    type: ss
+    cipher: aes-256-gcm
+    password: pKEW8JPByTVTLtM
+  - name: United States (US)Atlanta6
+    server: 167.88.63.59
+    port: 8881
+    type: ss
+    cipher: aes-256-gcm
+    password: kDWvXYZoTBcGkC4
+  - name: Canada (CA)Ottawa3
+    server: 196.247.59.156
+    port: 801
+    type: ss
+    cipher: chacha20-ietf-poly1305
+    password: G!yBwPWH3Vao
+  - name: Japan (JP)Tokyo36
+    server: 85.208.108.21
+    port: 8090
+    type: ss
+    cipher: aes-256-gcm
+    password: PCnnH6SQSnfoS27
+  - name: France (FR)11
+    server: 51.38.118.42
+    port: 811
+    type: ss
+    cipher: chacha20-ietf-poly1305
+    password: Ultr@r00t_2017
+  - name: United States (US)Los Angeles8
+    server: 38.114.114.69
+    port: 8080
+    type: ss
+    cipher: aes-256-gcm
+    password: KixLvKzwjekG00rm
+  - name: France (FR)12
+    server: 51.38.118.42
+    port: 819
+    type: ss
+    cipher: chacha20-ietf-poly1305
+    password: Ultr@r00t_2017
+  - name: France (FR)13
+    server: 51.38.118.42
+    port: 817
+    type: ss
+    cipher: chacha20-ietf-poly1305
+    password: Ultr@r00t_2017
+  - name: Japan (JP)Tokyo37
+    server: 85.208.108.21
+    port: 8119
+    type: ss
+    cipher: aes-256-gcm
+    password: cdBIDV42DCwnfIN
+  - name: Japan (JP)Tokyo38
+    server: 85.208.108.21
+    port: 6379
+    type: ss
+    cipher: aes-256-gcm
+    password: zDNVedRFPQexG9v
+  - name: France (FR)14
+    server: 51.38.118.42
+    port: 811
+    type: ss
+    cipher: chacha20-ietf-poly1305
+    password: Ultr@r00t_2017
+  - name: France (FR)15
+    server: 51.38.118.42
+    port: 811
+    type: ss
+    cipher: chacha20-ietf-poly1305
+    password: Ultr@r00t_2017
+  - name: Japan (JP)Tokyo39
+    server: 85.208.108.21
+    port: 8090
+    type: ss
+    cipher: aes-256-gcm
+    password: PCnnH6SQSnfoS27
+  - name: United States (US)Dallas31
+    server: 38.68.134.85
+    port: 443
+    type: ss
+    cipher: aes-256-gcm
+    password: pKEW8JPByTVTLtM
+  - name: United States (US)Dallas32
+    server: 38.68.134.85
+    port: 5004
+    type: ss
+    cipher: aes-256-gcm
+    password: g5MeD6Ft3CWlJId
+  - name: United States (US)Dallas33
+    server: 38.68.134.85
+    port: 8118
+    type: ss
+    cipher: aes-256-gcm
+    password: cdBIDV42DCwnfIN
+  - name: United States (US)Dallas34
+    server: 38.68.134.85
+    port: 8008
+    type: ss
+    cipher: aes-256-gcm
+    password: XKFKl2rULjIp74
+  - name: United States (US)Dallas35
+    server: 38.68.134.85
+    port: 8090
+    type: ss
+    cipher: aes-256-gcm
+    password: PCnnH6SQSnfoS27
+  - name: United States (US)Dallas36
+    server: 38.68.134.85
+    port: 6679
+    type: ss
+    cipher: aes-256-gcm
+    password: TEzjfAYq2IjtuoS
+  - name: United States (US)Dallas37
+    server: 38.68.134.85
+    port: 5600
+    type: ss
+    cipher: aes-256-gcm
+    password: Y6R9pAtvxxzmGC
+  - name: United States (US)Newark
+    server: 5.188.0.151
+    port: 800
+    type: ss
+    cipher: chacha20-ietf-poly1305
+    password: G!yBwPWH3Vao
+  - name: United States (US)Dallas38
+    server: 38.68.134.85
+    port: 2375
+    type: ss
+    cipher: aes-256-gcm
+    password: faBAoD54k87UJG7
+  - name: United States (US)Los Angeles9
+    server: 38.75.136.21
+    port: 8888
+    type: ss
+    cipher: aes-256-gcm
+    password: Y6R9pAtvxxzmGC
+  - name: Japan (JP)Tokyo40
+    server: 85.208.108.21
+    port: 7001
+    type: ss
+    cipher: aes-256-gcm
+    password: RexnBgU7EV5ADxG
+  - name: Japan (JP)Tokyo41
+    server: 85.208.108.60
+    port: 8882
+    type: ss
+    cipher: aes-256-gcm
+    password: kDWvXYZoTBcGkC4
+  - name: United States (US)Los Angeles10
+    server: 38.75.136.21
+    port: 8080
+    type: ss
+    cipher: aes-256-gcm
+    password: KixLvKzwjekG00rm
+  - name: United States (US)Los Angeles11
+    server: 38.114.114.69
+    port: 443
+    type: ss
+    cipher: aes-256-gcm
+    password: pKEW8JPByTVTLtM
+  - name: United States (US)Los Angeles12
+    server: 38.114.114.69
+    port: 8008
+    type: ss
+    cipher: aes-256-gcm
+    password: XKFKl2rULjIp74
+  - name: United States (US)Dallas39
+    server: 38.68.134.85
+    port: 2375
+    type: ss
+    cipher: aes-256-gcm
+    password: faBAoD54k87UJG7
+  - name: Japan (JP)Tokyo42
+    server: 85.208.108.21
+    port: 7001
+    type: ss
+    cipher: aes-256-gcm
+    password: RexnBgU7EV5ADxG
+  - name: Japan (JP)Osaka
+    server: 150.230.57.77
+    port: 48007
+    type: ss
+    cipher: aes-256-gcm
+    password: 123456
+  - name: United States (US)Seattle
+    server: 38.91.102.74
+    port: 5003
+    type: ss
+    cipher: aes-256-gcm
+    password: g5MeD6Ft3CWlJId
+  - name: Japan (JP)Tokyo43
+    server: 85.208.108.21
+    port: 8080
+    type: ss
+    cipher: aes-256-gcm
+    password: KixLvKzwjekG00rm
+  - name: Italy (IT)5
+    server: 84.33.193.79
+    port: 18760
+    type: ss
+    cipher: aes-256-gcm
+    password: hg49$WH8943g3
+  - name: Italy (IT)6
+    server: 84.33.193.79
+    port: 18760
+    type: ss
+    cipher: aes-256-gcm
+    password: hg49$WH8943g3
+  - name: United States (US)Santa Clara1
+    server: do.cloudorg.uk
+    port: 10365
+    type: ss
+    cipher: chacha20-ietf-poly1305
+    password: 9682edd6-89e6-4e6a-b31d-271089771d87
+  - name: United States (US)Santa Clara2
+    server: do.cloudorg.uk
+    port: 10365
+    type: ss
+    cipher: chacha20-ietf-poly1305
+    password: 9682edd6-89e6-4e6a-b31d-271089771d87
+  - name: United States (US)Santa Clara3
+    server: 137.184.93.209
+    port: 10365
+    type: ss
+    cipher: chacha20-ietf-poly1305
+    password: 9682edd6-89e6-4e6a-b31d-271089771d87
+  - name: France (FR)16
+    server: 51.38.118.42
+    port: 810
+    type: ss
+    cipher: chacha20-ietf-poly1305
+    password: Ultr@r00t_2017
+  - name: Arvan
+    type: http
+    server: 37.32.20.174
+    port: "443"
+  - name: check
+    type: http
+    server: 194.36.174.153
+    port: "443"
+proxy-groups:
+  - name: MENU
+    type: select
+    proxies:
+      - AUTOMATIC
+      - MANUAL
+  - name: MANUAL
+    type: select
+    proxies:
+      - Arvan
+      - France (FR)1
+      - United States (US)Dallas1
+      - United States (US)Dallas2
+      - Japan (JP)Tokyo1
+      - Japan (JP)Tokyo2
+      - Japan (JP)Tokyo3
+      - Japan (JP)Tokyo4
+      - Japan (JP)Tokyo5
+      - United States (US)Dallas3
+      - United States (US)Dallas4
+      - United States (US)Dallas5
+      - United States (US)Dallas6
+      - United States (US)Dallas7
+      - United States (US)Dallas8
+      - United States (US)Dallas9
+      - United States (US)Dallas10
+      - United States (US)Dallas11
+      - United States (US)Dallas12
+      - United States (US)Dallas13
+      - United States (US)Dallas14
+      - United States (US)Dallas15
+      - United States (US)Chicago1
+      - Italy (IT)1
+      - Canada (CA)Ottawa1
+      - Japan (JP)Tokyo6
+      - Japan (JP)Tokyo7
+      - Japan (JP)Tokyo8
+      - Japan (JP)Tokyo9
+      - Japan (JP)Tokyo10
+      - Japan (JP)Tokyo11
+      - Japan (JP)Tokyo12
+      - Japan (JP)Tokyo13
+      - Japan (JP)Tokyo14
+      - Japan (JP)Tokyo15
+      - Japan (JP)Tokyo16
+      - Japan (JP)Tokyo17
+      - Italy (IT)2
+      - United States (US)Dallas16
+      - United States (US)Dallas17
+      - United States (US)Dallas18
+      - United States (US)Dallas19
+      - United States (US)Los Angeles1
+      - Japan (JP)Tokyo18
+      - France (FR)2
+      - United States (US)Dallas20
+      - United States (US)Dallas21
+      - United States (US)Dallas22
+      - United States (US)Atlanta1
+      - France (FR)3
+      - Japan (JP)Tokyo19
+      - United States (US)Los Angeles2
+      - United States (US)Dallas23
+      - United States (US)Dallas24
+      - United States (US)Atlanta2
+      - United States (US)Dallas25
+      - Poland (PL)1
+      - Italy (IT)Milan1
+      - Italy (IT)Milan2
+      - Poland (PL)2
+      - Japan (JP)Tokyo20
+      - Poland (PL)3
+      - Japan (JP)Tokyo21
+      - United States (US)Dallas26
+      - Italy (IT)3
+      - United States (US)Los Angeles3
+      - United States (US)Los Angeles4
+      - Poland (PL)4
+      - United States (US)Dallas27
+      - Japan (JP)Tokyo22
+      - Japan (JP)Tokyo23
+      - Italy (IT)Milan3
+      - United States (US)Dallas28
+      - Japan (JP)Tokyo24
+      - United States (US)Los Angeles5
+      - France (FR)4
+      - United States (US)Los Angeles6
+      - United States (US)Dallas29
+      - France (FR)5
+      - Japan (JP)Tokyo25
+      - Japan (JP)Tokyo26
+      - Japan (JP)Tokyo27
+      - Japan (JP)Tokyo28
+      - United States (US)Dallas30
+      - United States (US)Los Angeles7
+      - Japan (JP)Tokyo29
+      - Japan (JP)Tokyo30
+      - France (FR)6
+      - Japan (JP)Tokyo31
+      - Japan (JP)Tokyo32
+      - Poland (PL)5
+      - Japan (JP)Tokyo33
+      - France (FR)7
+      - Italy (IT)Milan4
+      - United States (US)Atlanta3
+      - Canada (CA)Ottawa2
+      - United States (US)Chicago2
+      - United States (US)Atlanta4
+      - Italy (IT)4
+      - Japan (JP)Tokyo34
+      - United States (US)Atlanta5
+      - France (FR)8
+      - France (FR)9
+      - France (FR)10
+      - Japan (JP)Tokyo35
+      - United States (US)Atlanta6
+      - Canada (CA)Ottawa3
+      - Japan (JP)Tokyo36
+      - France (FR)11
+      - United States (US)Los Angeles8
+      - France (FR)12
+      - France (FR)13
+      - Japan (JP)Tokyo37
+      - Japan (JP)Tokyo38
+      - France (FR)14
+      - France (FR)15
+      - Japan (JP)Tokyo39
+      - United States (US)Dallas31
+      - United States (US)Dallas32
+      - United States (US)Dallas33
+      - United States (US)Dallas34
+      - United States (US)Dallas35
+      - United States (US)Dallas36
+      - United States (US)Dallas37
+      - United States (US)Newark
+      - United States (US)Dallas38
+      - United States (US)Los Angeles9
+      - Japan (JP)Tokyo40
+      - Japan (JP)Tokyo41
+      - United States (US)Los Angeles10
+      - United States (US)Los Angeles11
+      - United States (US)Los Angeles12
+      - United States (US)Dallas39
+      - Japan (JP)Tokyo42
+      - Japan (JP)Osaka
+      - United States (US)Seattle
+      - Japan (JP)Tokyo43
+      - Italy (IT)5
+      - Italy (IT)6
+      - United States (US)Santa Clara1
+      - United States (US)Santa Clara2
+      - United States (US)Santa Clara3
+      - France (FR)16
+  - name: AUTOMATIC
+    type: url-test
+    url: http://connectivitycheck.gstatic.com/generate_204
+    interval: 300
+    proxies:
+      - France (FR)1
+      - United States (US)Dallas1
+      - United States (US)Dallas2
+      - Japan (JP)Tokyo1
+      - Japan (JP)Tokyo2
+      - Japan (JP)Tokyo3
+      - Japan (JP)Tokyo4
+      - Japan (JP)Tokyo5
+      - United States (US)Dallas3
+      - United States (US)Dallas4
+      - United States (US)Dallas5
+      - United States (US)Dallas6
+      - United States (US)Dallas7
+      - United States (US)Dallas8
+      - United States (US)Dallas9
+      - United States (US)Dallas10
+      - United States (US)Dallas11
+      - United States (US)Dallas12
+      - United States (US)Dallas13
+      - United States (US)Dallas14
+      - United States (US)Dallas15
+      - United States (US)Chicago1
+      - Italy (IT)1
+      - Canada (CA)Ottawa1
+      - Japan (JP)Tokyo6
+      - Japan (JP)Tokyo7
+      - Japan (JP)Tokyo8
+      - Japan (JP)Tokyo9
+      - Japan (JP)Tokyo10
+      - Japan (JP)Tokyo11
+      - Japan (JP)Tokyo12
+      - Japan (JP)Tokyo13
+      - Japan (JP)Tokyo14
+      - Japan (JP)Tokyo15
+      - Japan (JP)Tokyo16
+      - Japan (JP)Tokyo17
+      - Italy (IT)2
+      - United States (US)Dallas16
+      - United States (US)Dallas17
+      - United States (US)Dallas18
+      - United States (US)Dallas19
+      - United States (US)Los Angeles1
+      - Japan (JP)Tokyo18
+      - France (FR)2
+      - United States (US)Dallas20
+      - United States (US)Dallas21
+      - United States (US)Dallas22
+      - United States (US)Atlanta1
+      - France (FR)3
+      - Japan (JP)Tokyo19
+      - United States (US)Los Angeles2
+      - United States (US)Dallas23
+      - United States (US)Dallas24
+      - United States (US)Atlanta2
+      - United States (US)Dallas25
+      - Poland (PL)1
+      - Italy (IT)Milan1
+      - Italy (IT)Milan2
+      - Poland (PL)2
+      - Japan (JP)Tokyo20
+      - Poland (PL)3
+      - Japan (JP)Tokyo21
+      - United States (US)Dallas26
+      - Italy (IT)3
+      - United States (US)Los Angeles3
+      - United States (US)Los Angeles4
+      - Poland (PL)4
+      - United States (US)Dallas27
+      - Japan (JP)Tokyo22
+      - Japan (JP)Tokyo23
+      - Italy (IT)Milan3
+      - United States (US)Dallas28
+      - Japan (JP)Tokyo24
+      - United States (US)Los Angeles5
+      - France (FR)4
+      - United States (US)Los Angeles6
+      - United States (US)Dallas29
+      - France (FR)5
+      - Japan (JP)Tokyo25
+      - Japan (JP)Tokyo26
+      - Japan (JP)Tokyo27
+      - Japan (JP)Tokyo28
+      - United States (US)Dallas30
+      - United States (US)Los Angeles7
+      - Japan (JP)Tokyo29
+      - Japan (JP)Tokyo30
+      - France (FR)6
+      - Japan (JP)Tokyo31
+      - Japan (JP)Tokyo32
+      - Poland (PL)5
+      - Japan (JP)Tokyo33
+      - France (FR)7
+      - Italy (IT)Milan4
+      - United States (US)Atlanta3
+      - Canada (CA)Ottawa2
+      - United States (US)Chicago2
+      - United States (US)Atlanta4
+      - Italy (IT)4
+      - Japan (JP)Tokyo34
+      - United States (US)Atlanta5
+      - France (FR)8
+      - France (FR)9
+      - France (FR)10
+      - Japan (JP)Tokyo35
+      - United States (US)Atlanta6
+      - Canada (CA)Ottawa3
+      - Japan (JP)Tokyo36
+      - France (FR)11
+      - United States (US)Los Angeles8
+      - France (FR)12
+      - France (FR)13
+      - Japan (JP)Tokyo37
+      - Japan (JP)Tokyo38
+      - France (FR)14
+      - France (FR)15
+      - Japan (JP)Tokyo39
+      - United States (US)Dallas31
+      - United States (US)Dallas32
+      - United States (US)Dallas33
+      - United States (US)Dallas34
+      - United States (US)Dallas35
+      - United States (US)Dallas36
+      - United States (US)Dallas37
+      - United States (US)Newark
+      - United States (US)Dallas38
+      - United States (US)Los Angeles9
+      - Japan (JP)Tokyo40
+      - Japan (JP)Tokyo41
+      - United States (US)Los Angeles10
+      - United States (US)Los Angeles11
+      - United States (US)Los Angeles12
+      - United States (US)Dallas39
+      - Japan (JP)Tokyo42
+      - Japan (JP)Osaka
+      - United States (US)Seattle
+      - Japan (JP)Tokyo43
+      - Italy (IT)5
+      - Italy (IT)6
+      - United States (US)Santa Clara1
+      - United States (US)Santa Clara2
+      - United States (US)Santa Clara3
+      - France (FR)16
+rules:
+  - DOMAIN-SUFFIX,ir,DIRECT
+  - GEOIP,IR,DIRECT
+  - MATCH,MENU
+  - IP-CIDR,192.168.0.0/16,DIRECT,no-resolve
+  - IP-CIDR,10.0.0.0/8,DIRECT,no-resolve
+  - IP-CIDR,172.16.0.0/12,DIRECT,no-resolve
+  - IP-CIDR,127.0.0.0/8,DIRECT,no-resolve
+  - IP-CIDR,100.64.0.0/10,DIRECT,no-resolve
+  - IP-CIDR6,::1/128,DIRECT,no-resolve
+  - IP-CIDR6,fc00::/7,DIRECT,no-resolve
+  - IP-CIDR6,fe80::/10,DIRECT,no-resolve
+  - IP-CIDR6,fd00::/8,DIRECT,no-resolve
+  - IP-CIDR,8.8.8.8/32,MENU
+  - IP-CIDR,8.8.4.4/32,MENU
+  - IP-CIDR,1.1.1.1/32,MENU
+  - IP-CIDR,1.0.0.1/32,MENU
+  - DOMAIN-SUFFIX,local,DIRECT
