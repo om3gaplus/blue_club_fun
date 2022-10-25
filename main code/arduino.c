@@ -369,6 +369,9 @@ void gcommand(String in) {
   if (in[1] == 'y') {
     zarib_gy(in[2], in[3]);
   }
+  if (in[1] == 'l') {
+    led_control(in[2], in[3]);
+  }
 }
 //**********************************************************************
 void zarib_gy(char ang, char zar) {
@@ -390,17 +393,17 @@ void zarib_gy(char ang, char zar) {
 void led_control(char led_type, byte volume) {
   switch (led_type) {
     case 'o':
-    orange_led(volume);
-    break;
+      orange_led(volume);
+      break;
     case 'w':
-    white_led(volume);
-    break;
+      white_led(volume);
+      break;
     case 'b':
-    orange_led(volume);
-    white_led(volume);
-    break;
+      orange_led(volume);
+      white_led(volume);
+      break;
     default:
-    break;
+      break;
   }
 }
 //**********************************************************************
