@@ -97,6 +97,9 @@ void loop() {
     z_static(gy_yaw);
     xy_static();
   }
+  if (gy_vazne){
+    vazne();
+  }
 }
 void jrl(char j, byte ri, bool at) {
   switch (j) {
