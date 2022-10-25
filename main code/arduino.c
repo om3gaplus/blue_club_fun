@@ -390,6 +390,13 @@ void zarib_gy(char ang, char zar) {
     break;
   }
 }
+//======================================================================
+void led_control(char led_type,byte volume){
+  switch (led_type){
+    case 'o':
+    
+  }
+}
 //**********************************************************************
 void eslah_zarib(char mo, char ang) {
   String an = ((String)ang);
@@ -770,6 +777,26 @@ void led_volume(byte volume) {
     Serial.println("led_off");
   } else {
     analogWrite(led_pin, map(volume, 1, 9, 20, 255));
+    Serial.println("led_on");
+  }
+}
+//=================================================================
+void orange_led(byte volume){
+  if (volume == 0) {
+    analogWrite(led_orange, 0);
+    Serial.println("led_off");
+  } else {
+    analogWrite(led_orange, map(volume, 1, 9, 20, 255));
+    Serial.println("led_on");
+  }
+}
+//===================================================================
+void white_led(byte volume){
+  if (volume == 0) {
+    analogWrite(led_white, 0);
+    Serial.println("led_off");
+  } else {
+    analogWrite(led_white, map(volume, 1, 9, 20, 255));
     Serial.println("led_on");
   }
 }
