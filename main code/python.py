@@ -14,12 +14,15 @@ check=False
 cruse =False
 sport=False
 uspeed=0
-led_volume=0
+vazne=False
+white_led_volume=0
+orange_led_volume=0
 cruse_s=0
 crues_d='i'
 dande=False
 def make_command(rea):
   sat=0
+  global uspeed
   dast="x00"+cru(uspeed)
   rpm=tra(rea[4])
   urpm=str(tra(rea[12]))
@@ -42,16 +45,26 @@ def make_command(rea):
       print("press x")
     if int(rea[8])==1:
       sig="r"
-    if int(rea[9])==1:
+    if int(rea[9])==1 and vazne==False:
       updn(-9)
-    if int(rea[10])==1:
+    if int(rea[10])==1 and vazne==False:
       updn(9)
+    if int(rea[9])==1 and vazne==True:
+      uspeed=-9
+    if int(rea[10])==1 and vazne==True:
+      uspeed=9
     if int(rea[11])==1:
       gcommand()
     if int(rea[15])==1 or int(rea[15])==-1 :
-      sig=led_power(int(rea[15]))
+      return white_led_power(int(rea[15]))
+    if int(rea[14])==1 or int(rea[14])==-1 :
+      return orange_led_power(-1*int(rea[14]))
     if int(rea[13])==1:
       leaver()
+    if int (rea[18])==1:
+      tog_vazne()
+      sig='v'
+      
     if int(rea[16])==1:
         tog_sport()
         if sport==True:
@@ -110,6 +123,22 @@ def tog_sport():
     sport=False
     return
 #=======================================
+def vazne_signal(dx):
+  if dx<0:
+    return "b0"+str(abs(dx))
+  if dx>=0:
+    return "v0"+str(abs(dx))
+  
+#=======================================
+def tog_vazne():
+  global vazne
+  if vazne==False:
+    vazne=True
+    return
+  if vazne == True:
+    vazne=False
+    return
+#=======================================
 def motor_sport(x,y):
   #print(y)
   if y>=0.5 and abs(x)<0.5:
@@ -131,18 +160,31 @@ def leaver():
     print("dande 1")
     return
 #---------------------------------------
-def led_power(x):
-  global led_volume
+def white_led_power(x):
+  global white_led_volume
   dx=int(x)
-  if led_volume >0 and led_volume<9:
-    led_volume-=dx
-  if led_volume==0 and dx <0:
-    led_volume-=dx
-  if led_volume==9 and dx>0:
-    led_volume-=dx
-  if (led_volume ==0 or led_volume==9):
+  if white_led_volume >0 and white_led_volume<9:
+    white_led_volume-=dx
+  if white_led_volume==0 and dx <0:
+    white_led_volume-=dx
+  if white_led_volume==9 and dx>0:
+    white_led_volume-=dx
+  if (white_led_volume ==0 or white_led_volume==9):
     en_vib()
-  return str(led_volume)
+  return "glw"+str(white_led_volume)
+#=========================================
+def orange_led_power(x):
+  global orange_led_volume
+  dx=int(x)
+  if orange_led_volume >0 and orange_led_volume<9:
+    orange_led_volume-=dx
+  if orange_led_volume==0 and dx <0:
+    orange_led_volume-=dx
+  if orange_led_volume==9 and dx>0:
+    orange_led_volume-=dx
+  if (orange_led_volume ==0 or orange_led_volume==9):
+    en_vib()
+  return "glo"+str(orange_led_volume)
 #---------------------------------------
 def en_vib(gamepad=None):
     if not gamepad:
@@ -205,7 +247,7 @@ def wasd(x,y):
 #----------------------------------------
 def cru(ispeed):
   global sport
-  if sport==False:
+  if sport==False and vazne==False:
     if(ispeed>0):
       if ispeed<10:
         return "u0"+str(ispeed)
@@ -216,7 +258,7 @@ def cru(ispeed):
       return "j"+str(abs(ispeed))
     if (ispeed==0):
       return "i00"
-  if sport==True:
+  if sport==True and vazne==False:
     if(ispeed>0):
       if ispeed<10:
         return "w0"+str(ispeed)
@@ -227,6 +269,8 @@ def cru(ispeed):
       return "s"+str(abs(ispeed))
     if (ispeed==0):
       return "x00"
+  if  vazne==True and sport==False:
+    return vazne_signal(ispeed)
 #----------------------------------------
 def updn(dx):
   global uspeed
@@ -315,7 +359,7 @@ class XboxController(object):
     pr=self.RightThumb
     pl=self.LeftThumb
     #print(ry)
-    return [lx, ly, a, b, rt,rx,ry,y,b,a,x,bb,lt,rb,bl,bu,pr,pl]
+    return [lx, ly, a, b, rt,rx,ry,y,b,a,x,bb,lt,rb,bl,bu,pr,pl,lb]
 
 
   def _monitor_controller(self):
@@ -385,4 +429,6 @@ if __name__ == '__main__':
         time.sleep(0.05)
       print(cc)
       lastc=cc
+      if (cc[3]=='v' or cc[3]=='b') and cc[5]!=0:
+        uspeed=0
     time.sleep(0.03)
