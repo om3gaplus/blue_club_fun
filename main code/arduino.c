@@ -3,7 +3,7 @@
 #include <Wire.h>
 // libs
 float tacx = 0, tacy = 0, tacz = 0, ax = 0, ay = 0, az = 0, last_z = 0;
-byte cmrj = 2, ccmrj = 1, cmlj = 2, ccmlj = 1, cmru = 2, ccmru = 1, cmlu = 2, ccmlu = 1, cma = 2, ccma = 1;
+byte cmrj = 1, ccmrj = 2, cmlj = 2, ccmlj = 1, cmru = 2, ccmru = 1, cmlu = 2, ccmlu = 1, cma = 2, ccma = 1;
 byte zarib_yaw = 5;
 byte zarib_roll = 8;
 byte zarib_pitch = 8;
@@ -17,30 +17,39 @@ bool gy_roll = false;
 bool gy_yaw = false;
 bool gy_pitch = false;
 bool gy_vazne = false;
-byte p_ms = 13;
-byte p_r1ms = 22;
-byte p_r2ms = 23;
+//byte p_ms = 13;
+byte p_r1ms = 9;
+byte p_r2ms = 10;
 MPU6050 mpu6050(Wire);
 byte led_pin = 7;
 // motor haye jelo R/L
-const byte pmrj = 8;
-const byte pmlj = 9;
+const byte pmrj = 2;
+const byte pmlj = 5;
 // motor haye bala R/L
-const byte pmru = 10;
-const byte pmlu = 11;
+const byte pmru = 3;
+const byte pmlu = 4;
+const byte led_orange = 2;
+const byte led_white = 3;
+
 // motor aghab
-const byte pma = 12;
+const byte pma = 6;
 // motor state and speed
-int smrj = 0;
+float smrj = 0;
 byte tmrj = 0;
-int smlj = 0;
+float smlj = 0;
 byte tmlj = 0;
-int smru = 0;
+float smru = 0;
 byte tmru = 0;
-int smlu = 0;
+float smlu = 0;
 byte tmlu = 0;
-int sma = 0;
+float sma = 0;
 byte tma = 0;
+//last commands
+char last_wasd = 'x';
+float last_wasd_speed = 0;
+char last_ud = 'i';
+float last_ud_speed = 0;
+//****************************************
 Servo mtrj, mtlj, mtlu, mtru, mta;
 void setup() {
   Serial.begin(9600);
@@ -80,6 +89,12 @@ void loop() {
       srt = (tempin.toInt());
       tempin = ((String)input[4] + input[5]);
       sblp = (tempin.toInt());
+      last_wasd = jht;
+      last_wasd_speed = srt;
+      if (blp == 'u' || blp == 'j' || blp == 'i' || blp == 'w' || blp == 's' || blp == 'x' || blp == 'v' || blp == 'b') {
+        last_ud = blp;
+        last_ud_speed = sblp;
+      }
       one_char(input[6]);
       //      gy_on_off(input[6]);
       delay(5);
@@ -97,7 +112,7 @@ void loop() {
     z_static(gy_yaw);
     xy_static();
   }
-  if (gy_vazne){
+  if (gy_vazne) {
     vazne();
   }
 }
@@ -271,13 +286,63 @@ void ud(char ju, byte ru, bool at) {
       ma(sma + ru, cma);
       mru(smru + ru, cmru);
       mlu(smlu + ru, cmlu);
+      Serial.println((String) "dor motor afzayesh yaft be :" + smru + " ba taghieer +" + ru);
       break;
     case 'b':
       ma(sma - ru, cma);
       mru(smru - ru, cmru);
       mlu(smlu - ru, cmlu);
+      Serial.println((String) "dor motor kahesh yaft be :" + smru + " ba taghieer -" + ru);
       break;
-
+    case 'p':
+      ma = (sma, tma);
+      state = xy_state();
+      if (state == 'v' || state == 's' || state=='z' || state=='c') {
+        if (tmlu == 0) {
+          mlu(smlu + 0.5, ccmlu);
+          mru(smru + 0.5, ccmru);
+        }
+        if (tmlu == ccmlu) {
+          mlu(smlu + 0.5, ccmlu);
+          mru(smru + 0.5, ccmru);
+        }
+        if (tmlu == cmlu) {
+          mlu(smlu - 0.5, cmlu);
+          mru(smru - 0.5, cmru);
+        }
+      }
+      if (state == 'w' || state=='q' || state=='e') {
+        if ((ru < abs(ax)) && ((abs(ax) - ru) > 5)) {
+          if (tmlu == 0) {
+            mlu(smlu + 0.5, ccmlu);
+            mru(smru + 0.5, ccmru);
+          }
+          if (tmlu == ccmlu) {
+            mlu(smlu + 0.5, ccmlu);
+            mru(smru + 0.5, ccmru);
+          }
+          if (tmlu == cmlu) {
+            mlu(smlu - 0.5, cmlu);
+            mru(smru - 0.5, cmru);
+          }
+        }
+      }
+      break;
+    case 'n':
+      ma = (sma, tma);
+      if (tmlu == 0) {
+        mlu(ru, cmlu);
+        mru(ru, cmru);
+      }
+      if (tmlu == ccmlu) {
+        mlu((sma)-ru, ccmlu);
+        mru((sma)-ru, ccmru);
+      }
+      if (tmlu == cmlu) {
+        mlu(0 + ru, cmlu);
+        mru(0 + ru, cmru);
+      }
+      break;
     default:
       break;
   }
@@ -285,16 +350,19 @@ void ud(char ju, byte ru, bool at) {
 //=====================================================================
 void vazne() {
   char stat;
+  //  Serial.println(stat);
   if (gy_vazne) {
-
+    //    Serial.println("in vazne loop");
     stat = xy_state();
     if (stat == 'w' || stat == 'q' || stat == 'e') {
-      mru(smru + abs(ax), cmru);
-      mlu(smlu + abs(ax), cmlu);
+      mru(smru + abs(ax) / 7, cmru);
+      mlu(smlu + abs(ax) / 7, cmlu);
+      Serial.println((String) "dor motor afzayesh yaft be : " + smru);
     }
     if (stat == 's' || stat == 'z' || stat == 'c') {
-      mru(smru - abs(ax), cmru);
-      mlu(smlu - abs(ax), cmlu);
+      mru(smru - abs(ax) / 7, cmru);
+      mlu(smlu - abs(ax) / 7, cmlu);
+      Serial.println((String) "dor motor kahesh yaft be : " + smru);
     }
   }
 }
@@ -655,7 +723,7 @@ void z_static(bool check) {
 }
 //***********************************************************************
 //*************************************motor R jolo
-void mrj(int news, byte newt) {
+void mrj(float news, byte newt) {
   if (news < 0) {
     news = 0;
   }
@@ -682,7 +750,7 @@ void mrj(int news, byte newt) {
   }
 }
 //*************************************motor L jolo
-void mlj(int news, byte newt) {
+void mlj(float news, byte newt) {
   if (news < 0) {
     news = 0;
   }
@@ -709,7 +777,7 @@ void mlj(int news, byte newt) {
   }
 }
 //************************************motor R bala
-void mru(int news, byte newt) {
+void mru(float news, byte newt) {
   if (news < 0) {
     news = 0;
   }
@@ -734,7 +802,7 @@ void mru(int news, byte newt) {
   }
 }
 //*****************************************motor L bala
-void mlu(int news, byte newt) {
+void mlu(float news, byte newt) {
   if (news < 0) {
     news = 0;
   }
@@ -759,7 +827,7 @@ void mlu(int news, byte newt) {
   }
 }
 //*******************************************motor aghab
-void ma(int news, byte newt) {
+void ma(float news, byte newt) {
   if (news < 0) {
     news = 0;
   }
@@ -817,18 +885,23 @@ void motor_sport(char in) {
   switch (in) {
     case 'w':
       digitalWrite(p_r1ms, LOW);
-      digitalWrite(p_r2ms, HIGH);
-      analogWrite(p_ms, 255);
+      analogWrite(p_r2ms, 155);
+      Serial.println("on");
+      //      #analogWrite(p_ms, 255);
       break;
     case 's':
-      digitalWrite(p_r1ms, HIGH);
       digitalWrite(p_r2ms, LOW);
-      analogWrite(p_ms, 255);
+      analogWrite(p_r1ms, 155);
+      Serial.println("on");
+      //      #analogWrite(p_ms, 255);
       break;
     case 'n':
       digitalWrite(p_r1ms, LOW);
-      digitalWrite(p_r1ms, LOW);
-      analogWrite(p_ms, 0);
+      digitalWrite(p_r2ms, LOW);
+      Serial.println("off");
+      //      analogWrite(p_ms, 0);
       break;
   }
+}
+void mnual_pitch(char d, byte s) {
 }
