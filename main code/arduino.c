@@ -78,7 +78,7 @@ void loop() {
   char blp;
   int sblp;
   String tempin;  // blp is bala & paieen and sblp is sorat and srt is sorat &
-                  // jht is jahat
+  // jht is jahat
   // Serial.println(smrj+tmrj+smlj+tmlj+smru+tmru+smlu+tmlu+sma+tma);
   if (Serial.available() > 0) {
     String input = Serial.readStringUntil('>');
@@ -295,8 +295,8 @@ void ud(char ju, byte ru, bool at) {
       Serial.println((String) "dor motor kahesh yaft be :" + smru + " ba taghieer -" + ru);
       break;
     case 'p':
-      ma = (sma, tma);
-      state = xy_state();
+      ma(sma, tma);
+      char state = xy_state();
       if (state == 'v' || state == 's' || state == 'z' || state == 'c') {
         if (tmlu == 0) {
           mlu(smlu + 0.5, ccmlu);
@@ -343,8 +343,8 @@ void ud(char ju, byte ru, bool at) {
       }
       break;
     case 'n':
-      ma = (sma, tma);
-      state = xy_state();
+      ma(sma, tma);
+       state = xy_state();
       if (state == 'v' || state == 'w' || state == 'q' || state == 'e') {
         if (tmlu == 0) {
           mlu(smlu + 0.5, cmlu);
@@ -1025,6 +1025,4 @@ void motor_sport(char in) {
       //      analogWrite(p_ms, 0);
       break;
   }
-}
-void mnual_pitch(char d, byte s) {
 }
