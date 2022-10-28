@@ -9,21 +9,32 @@ print ("available COM port/s is/are :")
 print([comport.device for comport in serial.tools.list_ports.comports()])
 ardport=str(int(input("input the number of arduino port: ")))
 lasttime=time.time()
-lastc="."
+
 check=False
 cruse =False
 sport=False
-uspeed=0
 vazne=False
+pitch=False
+dande=False
+uspeed=0
 white_led_volume=0
 orange_led_volume=0
 cruse_s=0
 crues_d='i'
-dande=False
+lastc="."
+
 def make_command(rea):
   sat=0
   global uspeed
+  global sport
   dast="x00"+cru(uspeed)
+  if pitch==True  and manual_pitch(float(rea[5]),float(rea[6]))!='i':
+    dast="x00"+manual_pitch(float(rea[5]),float(rea[6]))
+  if sport==True:
+    dast=('p00'+cru(uspeed))
+    if pitch==True and manual_pitch(float(rea[5]),float(rea[6]))!='i':
+      dast=('p00'+manual_pitch(float(rea[5]),float(rea[6])))
+    
   rpm=tra(rea[4])
   urpm=str(tra(rea[12]))
   global cruse
@@ -32,13 +43,29 @@ def make_command(rea):
   global cruse_s
   global lasttime
   sig=motor_sport(float(rea[5]),float(rea[6]))
+
+  
   if wasd(rea[0],rea[1])!=None and int(rpm)!=0 :
     dast=(wasd(rea[0],rea[1])+rpm+cru(uspeed))
+    if pitch==True  and manual_pitch(float(rea[5]),float(rea[6]))!='i':
+      dast=(wasd(rea[0],rea[1])+rpm+manual_pitch(float(rea[5]),float(rea[6])))
     sat=2
-  if wasd(rea[0],rea[1])=='x' or int(rpm)==0 or int(rea[7])!=0 or int(rea[8])!=0 or int(rea[9])!=0 or int(rea[10])!=0:
+
+    
+  if wasd(rea[0],rea[1])=='x' or wasd(rea[0],rea[1])=='p' or int(rpm)==0 or int(rea[7])!=0 or int(rea[8])!=0 or int(rea[9])!=0 or int(rea[10])!=0:
     if sat!=0 or int(rea[7])!=0 or int(rea[8])!=0 or int(rea[9])!=0 or int(rea[10])!=0:
       dast=('x00'+cru(uspeed))
+      if pitch==True  and manual_pitch(float(rea[5]),float(rea[6]))!='i':
+        dast=('x00'+manual_pitch(float(rea[5]),float(rea[6])))
+
+      
+      if sport==True:
+        dast=('p00'+cru(uspeed))
+        if pitch==True  and manual_pitch(float(rea[5]),float(rea[6]))!='i':
+          dast=('p00'+manual_pitch(float(rea[5]),float(rea[6])))
       sat-=1
+
+      
   if (float(time.time())-float(lasttime))>0.19:
     if int(rea[7])==1:
       sig="n"
@@ -64,15 +91,19 @@ def make_command(rea):
     if int (rea[18])==1:
       tog_vazne()
       sig='v'
-      
+      en_vib()
+    if int (rea[19])==1:
+      tog_pitch()
+      en_vib()
     if int(rea[16])==1:
         tog_sport()
+        en_vib()
         if sport==True:
           print("sport mode is activated!")
         if sport==False:
           print("sport mode is deactivated!")
-    if int(rea[17])==1:
-        print("press left joy")
+    #if int(rea[17])==1:
+       # print("press left joy")
     lasttime=time.time()
 
   else:
@@ -104,7 +135,7 @@ arduino = serial.Serial(port='COM'+ardport, baudrate=9600, timeout=0.001)
 def tra(fl):
   fl=int((fl-(fl%0.01))*100)
   if dande:
-    fl=int(fl/3)
+    fl=int(fl/6)
   if fl>98:
     return "99"
   if fl>=10:
@@ -121,6 +152,17 @@ def tog_sport():
     return
   if sport == True:
     sport=False
+    return
+#=======================================
+def tog_pitch():
+  global pitch
+  if pitch==False:
+    pitch=True
+    print("manual pitch is on")
+    return
+  if pitch == True:
+    pitch=False
+    print("manual pitch is off")
     return
 #=======================================
 def vazne_signal(dx):
@@ -141,11 +183,22 @@ def tog_vazne():
 #=======================================
 def motor_sport(x,y):
   #print(y)
-  if y>=0.5 and abs(x)<0.5:
+  if y>=0.5:
     return 'w'
-  if y<=-0.5 and abs(x)<0.3:
+  if y<=-0.5:
     return 's'
   return 'n'
+#=======================================
+def mmap(value, leftMin, leftMax, rightMin, rightMax):
+    # Figure out how 'wide' each range is
+    leftSpan = leftMax - leftMin
+    rightSpan = rightMax - rightMin
+
+    # Convert the left range into a 0-1 range (float)
+    valueScaled = float(value - leftMin) / float(leftSpan)
+
+    # Convert the 0-1 range into a value in the right range.
+    return rightMin + (valueScaled * rightSpan)
 #=======================================
 def leaver():
   global dande
@@ -274,17 +327,33 @@ def cru(ispeed):
 #----------------------------------------
 def updn(dx):
   global uspeed
-  if(abs(uspeed)<=90):
-    uspeed+=dx
-    return
-  if(uspeed==99 and dx<0):
-    uspeed+=dx
-    return
-  if(uspeed==-99 and dx>0):
-    uspeed+=dx
-    return
-  if uspeed==0 or uspeed==99 or uspeed==-99:
-    en_vib()
+  global dande
+  if dande == False:
+    if(abs(uspeed)<=90):
+      uspeed+=dx
+      return
+    if(uspeed==99 and dx<0):
+      uspeed+=dx
+      return
+    if(uspeed==-99 and dx>0):
+      uspeed+=dx
+      return
+    if uspeed==0 or uspeed==99 or uspeed==-99:
+      en_vib()
+  if dande == True:
+    dx=int(dx/3)
+    if(abs(uspeed)<=97):
+      uspeed+=dx
+      return
+    if(uspeed==99 and dx<0):
+      uspeed+=dx
+      return
+    if(uspeed==-99 and dx>0):
+      uspeed+=dx
+      return
+    if uspeed==0 or uspeed==99 or uspeed==-99:
+      en_vib()
+     
 #----------------------------------------
 def updown(x,y,check):
   global cruse_d
@@ -298,6 +367,28 @@ def updown(x,y,check):
     return cruse_d
 
 #----------------------------------------
+def manual_pitch(x,y):
+  global sport
+  global pitch
+  speed=abs(int((y*100)/3))
+  if speed>99:
+    speed==99
+  speed=str(speed)
+  if int(speed)<10:
+    speed='0'+speed
+  if pitch == True and sport == False:
+    if y>=0.1:
+      return 'p'+speed
+    if y<=-0.1:
+      return 'n'+speed
+    return 'i'
+  if pitch == True and sport == True:
+    if y>=0.1:
+      return 't'+speed
+    if y<=-0.1:
+      return 'g'+speed
+    return 'i'
+#========================================
 def write_read(x):
   arduino.write(bytes(x, 'utf-8'))
   try:
@@ -359,7 +450,7 @@ class XboxController(object):
     pr=self.RightThumb
     pl=self.LeftThumb
     #print(ry)
-    return [lx, ly, a, b, rt,rx,ry,y,b,a,x,bb,lt,rb,bl,bu,pr,pl,lb]
+    return [lx, ly, a, b, rt,rx,ry,y,b,a,x,bb,lt,rb,bl,bu,pl,pl,lb,bs]
 
 
   def _monitor_controller(self):
