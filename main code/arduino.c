@@ -297,7 +297,7 @@ void ud(char ju, byte ru, bool at) {
     case 'p':
       ma = (sma, tma);
       state = xy_state();
-      if (state == 'v' || state == 's' || state=='z' || state=='c') {
+      if (state == 'v' || state == 's' || state == 'z' || state == 'c') {
         if (tmlu == 0) {
           mlu(smlu + 0.5, ccmlu);
           mru(smru + 0.5, ccmru);
@@ -311,7 +311,7 @@ void ud(char ju, byte ru, bool at) {
           mru(smru - 0.5, cmru);
         }
       }
-      if (state == 'w' || state=='q' || state=='e') {
+      if (state == 'w' || state == 'q' || state == 'e') {
         if ((ru < abs(ax)) && ((abs(ax) - ru) > 5)) {
           if (tmlu == 0) {
             mlu(smlu + 0.5, ccmlu);
@@ -326,21 +326,144 @@ void ud(char ju, byte ru, bool at) {
             mru(smru - 0.5, cmru);
           }
         }
+        if ((ru > abs(ax)) && ((abs(ax) - ru) < 5)) {
+          if (tmlu == 0) {
+            mlu(smlu + 0.5, cmlu);
+            mru(smru + 0.5, cmru);
+          }
+          if (tmlu == ccmlu) {
+            mlu(smlu - 0.5, ccmlu);
+            mru(smru - 0.5, ccmru);
+          }
+          if (tmlu == cmlu) {
+            mlu(smlu + 0.5, cmlu);
+            mru(smru + 0.5, cmru);
+          }
+        }
       }
       break;
     case 'n':
       ma = (sma, tma);
-      if (tmlu == 0) {
-        mlu(ru, cmlu);
-        mru(ru, cmru);
+      state = xy_state();
+      if (state == 'v' || state == 'w' || state == 'q' || state == 'e') {
+        if (tmlu == 0) {
+          mlu(smlu + 0.5, cmlu);
+          mru(smru + 0.5, cmru);
+        }
+        if (tmlu == cmlu) {
+          mlu(smlu + 0.5, cmlu);
+          mru(smru + 0.5, cmru);
+        }
+        if (tmlu == ccmlu) {
+          mlu(smlu - 0.5, ccmlu);
+          mru(smru - 0.5, ccmru);
+        }
       }
-      if (tmlu == ccmlu) {
-        mlu((sma)-ru, ccmlu);
-        mru((sma)-ru, ccmru);
+      if (state == 's' || state == 'z' || state == 'c') {
+        if ((ru < abs(ax)) && ((abs(ax) - ru) > 5)) {
+          if (tmlu == 0) {
+            mlu(smlu + 0.5, cmlu);
+            mru(smru + 0.5, cmru);
+          }
+          if (tmlu == cmlu) {
+            mlu(smlu + 0.5, cmlu);
+            mru(smru + 0.5, cmru);
+          }
+          if (tmlu == ccmlu) {
+            mlu(smlu - 0.5, ccmlu);
+            mru(smru - 0.5, ccmru);
+          }
+        }
+        if ((ru > abs(ax)) && ((abs(ax) - ru) < 5)) {
+          if (tmlu == 0) {
+            mlu(smlu + 0.5, ccmlu);
+            mru(smru + 0.5, ccmru);
+          }
+          if (tmlu == cmlu) {
+            mlu(smlu - 0.5, cmlu);
+            mru(smru - 0.5, cmru);
+          }
+          if (tmlu == ccmlu) {
+            mlu(smlu + 0.5, ccmlu);
+            mru(smru + 0.5, ccmru);
+          }
+        }
       }
-      if (tmlu == cmlu) {
-        mlu(0 + ru, cmlu);
-        mru(0 + ru, cmru);
+      break;
+    case 't':
+      state = xy_state();
+      if (state == 'v' || state == 's' || state == 'z' || state == 'c') {
+        if (tma == 0) {
+          mlu(sma + 0.5, cma);
+        }
+        if (tma == cma) {
+          mlu(sma + 0.5, cma);
+        }
+        if (tma == ccma) {
+          mlu(sma - 0.5, ccma);
+        }
+      }
+      if (state == 'w' || state == 'q' || state == 'e') {
+        if ((ru < abs(ax)) && ((abs(ax) - ru) > 5)) {
+          if (tma == 0) {
+            mlu(sma + 0.5, cma);
+          }
+          if (tma == cma) {
+            mlu(sma + 0.5, cma);
+          }
+          if (tma == ccma) {
+            mlu(sma - 0.5, ccma);
+          }
+        }
+        if ((ru > abs(ax)) && ((abs(ax) - ru) < 5)) {
+          if (tmlu == 0) {
+            mlu(sma + 0.5, ccma);
+          }
+          if (tma == cma) {
+            mlu(sma - 0.5, cma);
+          }
+          if (tma == ccma) {
+            mlu(sma + 0.5, ccma);
+          }
+        }
+      }
+      break;
+    case 'g':
+      state = xy_state();
+      if (state == 'v' || state == 'w' || state == 'q' || state == 'e') {
+        if (tma == 0) {
+          mlu(sma + 0.5, ccma);
+        }
+        if (tma == ccma) {
+          mlu(sma + 0.5, ccma);
+        }
+        if (tma == cma) {
+          mlu(sma - 0.5, cma);
+        }
+      }
+      if (state == 's' || state == 'z' || state == 'c') {
+        if ((ru < abs(ax)) && ((abs(ax) - ru) > 5)) {
+          if (tma == 0) {
+            mlu(sma + 0.5, ccma);
+          }
+          if (tma == ccma) {
+            mlu(sma + 0.5, ccma);
+          }
+          if (tma == cma) {
+            mlu(sma - 0.5, cma);
+          }
+        }
+        if ((ru > abs(ax)) && ((abs(ax) - ru) < 5)) {
+          if (tmlu == 0) {
+            mlu(sma + 0.5, cma);
+          }
+          if (tma == ccma) {
+            mlu(sma - 0.5, ccma);
+          }
+          if (tma == cma) {
+            mlu(sma + 0.5, cma);
+          }
+        }
       }
       break;
     default:
