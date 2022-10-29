@@ -409,36 +409,36 @@ void ud(char ju, byte ru, bool at) {
      pitch_state = xy_state();
       if (pitch_state == 'v' || pitch_state == 's' || pitch_state == 'z' || pitch_state == 'c') {
         if (tma == 0) {
-          mlu(sma + 0.5, cma);
+          ma(sma + 0.5, cma);
         }
         if (tma == cma) {
-          mlu(sma + 0.5, cma);
+          ma(sma + 0.5, cma);
         }
         if (tma == ccma) {
-          mlu(sma - 0.5, ccma);
+          ma(sma - 0.5, ccma);
         }
       }
       if (pitch_state == 'w' || pitch_state == 'q' || pitch_state == 'e') {
         if ((ru < abs(ax)) && ((abs(ax) - ru) > 5)) {
           if (tma == 0) {
-            mlu(sma + 0.5, cma);
+            ma(sma + 0.5, cma);
           }
           if (tma == cma) {
-            mlu(sma + 0.5, cma);
+            ma(sma + 0.5, cma);
           }
           if (tma == ccma) {
-            mlu(sma - 0.5, ccma);
+            ma(sma - 0.5, ccma);
           }
         }
         if ((ru > abs(ax)) && ((abs(ax) - ru) < 5)) {
           if (tmlu == 0) {
-            mlu(sma + 0.5, ccma);
+            ma(sma + 0.5, ccma);
           }
           if (tma == cma) {
-            mlu(sma - 0.5, cma);
+            ma(sma - 0.5, cma);
           }
           if (tma == ccma) {
-            mlu(sma + 0.5, ccma);
+            ma(sma + 0.5, ccma);
           }
         }
       }
@@ -447,36 +447,36 @@ void ud(char ju, byte ru, bool at) {
      pitch_state= xy_state();
       if (pitch_state == 'v' || pitch_state == 'w' || pitch_state == 'q' || pitch_state == 'e') {
         if (tma == 0) {
-          mlu(sma + 0.5, ccma);
+          ma(sma + 0.5, ccma);
         }
         if (tma == ccma) {
-          mlu(sma + 0.5, ccma);
+          ma(sma + 0.5, ccma);
         }
         if (tma == cma) {
-          mlu(sma - 0.5, cma);
+          ma(sma - 0.5, cma);
         }
       }
       if (pitch_state == 's' || pitch_state == 'z' || pitch_state == 'c') {
         if ((ru < abs(ax)) && ((abs(ax) - ru) > 5)) {
           if (tma == 0) {
-            mlu(sma + 0.5, ccma);
+            ma(sma + 0.5, ccma);
           }
           if (tma == ccma) {
-            mlu(sma + 0.5, ccma);
+            ma(sma + 0.5, ccma);
           }
           if (tma == cma) {
-            mlu(sma - 0.5, cma);
+            ma(sma - 0.5, cma);
           }
         }
         if ((ru > abs(ax)) && ((abs(ax) - ru) < 5)) {
           if (tmlu == 0) {
-            mlu(sma + 0.5, cma);
+            ma(sma + 0.5, cma);
           }
           if (tma == ccma) {
-            mlu(sma - 0.5, ccma);
+            ma(sma - 0.5, ccma);
           }
           if (tma == cma) {
-            mlu(sma + 0.5, cma);
+            ma(sma + 0.5, cma);
           }
         }
       }
