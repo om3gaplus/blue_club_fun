@@ -42,7 +42,9 @@ def make_command(rea):
   global cruse_d
   global cruse_s
   global lasttime
-  sig=motor_sport(float(rea[5]),float(rea[6]))
+  sig='n'
+  if pitch==False:
+    sig=motor_sport(float(rea[5]),float(rea[6]))
 
   
   if wasd(rea[0],rea[1])!=None and int(rpm)!=0 :
@@ -107,7 +109,9 @@ def make_command(rea):
     lasttime=time.time()
 
   else:
-    sig=motor_sport(float(rea[5]),float(rea[6]))
+    sig='n'
+    if pitch==False:
+      sig=motor_sport(float(rea[5]),float(rea[6]))
   return (dast+sig+">")
 def gcommand():
   gc=1
