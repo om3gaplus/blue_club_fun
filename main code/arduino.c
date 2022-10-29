@@ -1,14 +1,25 @@
 #include <MPU6050_tockn.h>
 #include <Servo.h>
 #include <Wire.h>
+#include <OneWire.h>
+#include <DallasTemperature.h>
+#define ONE_WIRE_BUS 28
+OneWire oneWire(ONE_WIRE_BUS);
+DallasTemperature sensors(&oneWire);
 // libs
 float tacx = 0, tacy = 0, tacz = 0, ax = 0, ay = 0, az = 0, last_z = 0;
-byte cmrj = 1, ccmrj = 2, cmlj = 2, ccmlj = 1, cmru = 2, ccmru = 1, cmlu = 2, ccmlu = 1, cma = 2, ccma = 1;
+byte cmrj = 1, ccmrj = 2;
+byte cmlj = 2, ccmlj = 1;
+byte cmru = 2, ccmru = 1;
+byte cmlu = 2, ccmlu = 1;
+byte cma = 2, ccma = 1;
 byte zarib_yaw = 5;
 byte zarib_roll = 8;
 byte zarib_pitch = 8;
 byte zarib_eslah = 5;
 // byte zarib_pichesh=2;
+char pitch_state='v';
+//===============================
 byte zarib_gy_yaw = 5;
 byte zarib_gy_roll = 5;
 byte zarib_gy_pitch = 5;
@@ -28,8 +39,9 @@ const byte pmlj = 5;
 // motor haye bala R/L
 const byte pmru = 3;
 const byte pmlu = 4;
-const byte led_orange = 2;
-const byte led_white = 3;
+//.......................................................
+const byte led_orange = 12;
+const byte led_white = 13;
 
 // motor aghab
 const byte pma = 6;
@@ -54,6 +66,7 @@ Servo mtrj, mtlj, mtlu, mtru, mta;
 void setup() {
   Serial.begin(9600);
   Wire.begin();
+  sensors.begin();
   mpu6050.begin();
   pinMode(led_pin, OUTPUT);
   mpu6050.calcGyroOffsets(false);
@@ -294,25 +307,10 @@ void ud(char ju, byte ru, bool at) {
       mlu(smlu - ru, cmlu);
       Serial.println((String) "dor motor kahesh yaft be :" + smru + " ba taghieer -" + ru);
       break;
-    case 'p':
-      ma(sma, tma);
-      char state = xy_state();
-      if (state == 'v' || state == 's' || state == 'z' || state == 'c') {
-        if (tmlu == 0) {
-          mlu(smlu + 0.5, ccmlu);
-          mru(smru + 0.5, ccmru);
-        }
-        if (tmlu == ccmlu) {
-          mlu(smlu + 0.5, ccmlu);
-          mru(smru + 0.5, ccmru);
-        }
-        if (tmlu == cmlu) {
-          mlu(smlu - 0.5, cmlu);
-          mru(smru - 0.5, cmru);
-        }
-      }
-      if (state == 'w' || state == 'q' || state == 'e') {
-        if ((ru < abs(ax)) && ((abs(ax) - ru) > 5)) {
+    case 'p': {
+        ma(sma, tma);
+        pitch_state = xy_state();
+        if (pitch_state == 'v' || pitch_state == 's' || pitch_state == 'z' || pitch_state == 'c') {
           if (tmlu == 0) {
             mlu(smlu + 0.5, ccmlu);
             mru(smru + 0.5, ccmru);
@@ -326,41 +324,42 @@ void ud(char ju, byte ru, bool at) {
             mru(smru - 0.5, cmru);
           }
         }
-        if ((ru > abs(ax)) && ((abs(ax) - ru) < 5)) {
-          if (tmlu == 0) {
-            mlu(smlu + 0.5, cmlu);
-            mru(smru + 0.5, cmru);
+        if (pitch_state == 'w' || pitch_state == 'q' || pitch_state == 'e') {
+          if ((ru < abs(ax)) && ((abs(ax) - ru) > 5)) {
+            if (tmlu == 0) {
+              mlu(smlu + 0.5, ccmlu);
+              mru(smru + 0.5, ccmru);
+            }
+            if (tmlu == ccmlu) {
+              mlu(smlu + 0.5, ccmlu);
+              mru(smru + 0.5, ccmru);
+            }
+            if (tmlu == cmlu) {
+              mlu(smlu - 0.5, cmlu);
+              mru(smru - 0.5, cmru);
+            }
           }
-          if (tmlu == ccmlu) {
-            mlu(smlu - 0.5, ccmlu);
-            mru(smru - 0.5, ccmru);
-          }
-          if (tmlu == cmlu) {
-            mlu(smlu + 0.5, cmlu);
-            mru(smru + 0.5, cmru);
+          if ((ru > abs(ax)) && ((abs(ax) - ru) < 5)) {
+            if (tmlu == 0) {
+              mlu(smlu + 0.5, cmlu);
+              mru(smru + 0.5, cmru);
+            }
+            if (tmlu == ccmlu) {
+              mlu(smlu - 0.5, ccmlu);
+              mru(smru - 0.5, ccmru);
+            }
+            if (tmlu == cmlu) {
+              mlu(smlu + 0.5, cmlu);
+              mru(smru + 0.5, cmru);
+            }
           }
         }
       }
       break;
-    case 'n':
-      ma(sma, tma);
-       state = xy_state();
-      if (state == 'v' || state == 'w' || state == 'q' || state == 'e') {
-        if (tmlu == 0) {
-          mlu(smlu + 0.5, cmlu);
-          mru(smru + 0.5, cmru);
-        }
-        if (tmlu == cmlu) {
-          mlu(smlu + 0.5, cmlu);
-          mru(smru + 0.5, cmru);
-        }
-        if (tmlu == ccmlu) {
-          mlu(smlu - 0.5, ccmlu);
-          mru(smru - 0.5, ccmru);
-        }
-      }
-      if (state == 's' || state == 'z' || state == 'c') {
-        if ((ru < abs(ax)) && ((abs(ax) - ru) > 5)) {
+    case 'n': {
+        ma(sma, tma);
+       pitch_state= xy_state();
+        if (pitch_state == 'v' || pitch_state == 'w' || pitch_state == 'q' || pitch_state == 'e') {
           if (tmlu == 0) {
             mlu(smlu + 0.5, cmlu);
             mru(smru + 0.5, cmru);
@@ -374,25 +373,41 @@ void ud(char ju, byte ru, bool at) {
             mru(smru - 0.5, ccmru);
           }
         }
-        if ((ru > abs(ax)) && ((abs(ax) - ru) < 5)) {
-          if (tmlu == 0) {
-            mlu(smlu + 0.5, ccmlu);
-            mru(smru + 0.5, ccmru);
+        if (pitch_state == 's' || pitch_state == 'z' || pitch_state == 'c') {
+          if ((ru < abs(ax)) && ((abs(ax) - ru) > 5)) {
+            if (tmlu == 0) {
+              mlu(smlu + 0.5, cmlu);
+              mru(smru + 0.5, cmru);
+            }
+            if (tmlu == cmlu) {
+              mlu(smlu + 0.5, cmlu);
+              mru(smru + 0.5, cmru);
+            }
+            if (tmlu == ccmlu) {
+              mlu(smlu - 0.5, ccmlu);
+              mru(smru - 0.5, ccmru);
+            }
           }
-          if (tmlu == cmlu) {
-            mlu(smlu - 0.5, cmlu);
-            mru(smru - 0.5, cmru);
-          }
-          if (tmlu == ccmlu) {
-            mlu(smlu + 0.5, ccmlu);
-            mru(smru + 0.5, ccmru);
+          if ((ru > abs(ax)) && ((abs(ax) - ru) < 5)) {
+            if (tmlu == 0) {
+              mlu(smlu + 0.5, ccmlu);
+              mru(smru + 0.5, ccmru);
+            }
+            if (tmlu == cmlu) {
+              mlu(smlu - 0.5, cmlu);
+              mru(smru - 0.5, cmru);
+            }
+            if (tmlu == ccmlu) {
+              mlu(smlu + 0.5, ccmlu);
+              mru(smru + 0.5, ccmru);
+            }
           }
         }
       }
       break;
     case 't':
-      state = xy_state();
-      if (state == 'v' || state == 's' || state == 'z' || state == 'c') {
+     pitch_state = xy_state();
+      if (pitch_state == 'v' || pitch_state == 's' || pitch_state == 'z' || pitch_state == 'c') {
         if (tma == 0) {
           mlu(sma + 0.5, cma);
         }
@@ -403,7 +418,7 @@ void ud(char ju, byte ru, bool at) {
           mlu(sma - 0.5, ccma);
         }
       }
-      if (state == 'w' || state == 'q' || state == 'e') {
+      if (pitch_state == 'w' || pitch_state == 'q' || pitch_state == 'e') {
         if ((ru < abs(ax)) && ((abs(ax) - ru) > 5)) {
           if (tma == 0) {
             mlu(sma + 0.5, cma);
@@ -429,8 +444,8 @@ void ud(char ju, byte ru, bool at) {
       }
       break;
     case 'g':
-      state = xy_state();
-      if (state == 'v' || state == 'w' || state == 'q' || state == 'e') {
+     pitch_state= xy_state();
+      if (pitch_state == 'v' || pitch_state == 'w' || pitch_state == 'q' || pitch_state == 'e') {
         if (tma == 0) {
           mlu(sma + 0.5, ccma);
         }
@@ -441,7 +456,7 @@ void ud(char ju, byte ru, bool at) {
           mlu(sma - 0.5, cma);
         }
       }
-      if (state == 's' || state == 'z' || state == 'c') {
+      if (pitch_state == 's' || pitch_state == 'z' || pitch_state == 'c') {
         if ((ru < abs(ax)) && ((abs(ax) - ru) > 5)) {
           if (tma == 0) {
             mlu(sma + 0.5, ccma);
@@ -566,6 +581,10 @@ void gcommand(String in) {
   if (in[1] == 'l') {
     led_control(in[2], in[3]);
   }
+  if (in[1] == 't') {
+    Serial.println((String)"temp" + get_temp() + "temp");
+  }
+
 }
 //**********************************************************************
 void zarib_gy(char ang, char zar) {
@@ -860,13 +879,13 @@ void mrj(float news, byte newt) {
     smrj = 0;
   }
   if (newt == 1 && news != 0) {
-    mtrj.writeMicroseconds(map(news, 1, 99, 1540, 2000));
+    mtrj.writeMicroseconds(map(news, 1, 99, 1540, 1900));
     Serial.println((String) "right motor speed= " + news + " state " + newt);
     smrj = news;
     tmrj = 1;
   }
   if (newt == 2 && news != 0) {
-    mtrj.writeMicroseconds(map(news, 1, 99, 1460, 1000));
+    mtrj.writeMicroseconds(map(news, 1, 99, 1460, 1100));
     Serial.println((String) "right motor speed= " + news + " state " + newt);
     smrj = news;
     tmrj = 2;
@@ -914,12 +933,12 @@ void mru(float news, byte newt) {
     smru = 0;
   }
   if (newt == 1 && news != 0) {
-    mtru.writeMicroseconds(map(news, 1, 99, 1540, 2000));
+    mtru.writeMicroseconds(map(news, 1, 99, 1540, 1900));
     smru = news;
     tmru = 1;
   }
   if (newt == 2 && news != 0) {
-    mtru.writeMicroseconds(map(news, 1, 99, 1460, 1000));
+    mtru.writeMicroseconds(map(news, 1, 99, 1460, 1100));
     smru = news;
     tmru = 2;
   }
@@ -939,12 +958,12 @@ void mlu(float news, byte newt) {
     smlu = 0;
   }
   if (newt == 1 && news != 0) {
-    mtlu.writeMicroseconds(map(news, 1, 99, 1540, 2000));
+    mtlu.writeMicroseconds(map(news, 1, 99, 1540, 1900));
     smlu = news;
     tmlu = 1;
   }
   if (newt == 2 && news != 0) {
-    mtlu.writeMicroseconds(map(news, 1, 99, 1460, 1000));
+    mtlu.writeMicroseconds(map(news, 1, 99, 1460, 1100));
     smlu = news;
     tmlu = 2;
   }
@@ -964,12 +983,12 @@ void ma(float news, byte newt) {
     sma = 0;
   }
   if (newt == 1 && news != 0) {
-    mta.writeMicroseconds(map(news, 1, 99, 1540, 2000));
+    mta.writeMicroseconds(map(news, 1, 99, 1540, 1900));
     sma = news;
     tma = 1;
   }
   if (newt == 2 && news != 0) {
-    mta.writeMicroseconds(map(news, 1, 99, 1460, 1000));
+    mta.writeMicroseconds(map(news, 1, 99, 1460, 1100));
     sma = news;
     tma = 2;
   }
@@ -997,10 +1016,10 @@ void orange_led(byte volume) {
 void white_led(byte volume) {
   if (volume == 0) {
     analogWrite(led_white, 0);
-    Serial.println("led_off");
+    Serial.println("led w _off");
   } else {
     analogWrite(led_white, map(volume, 1, 9, 20, 255));
-    Serial.println("led_on");
+    Serial.println("led w _on");
   }
 }
 //=================================================================
@@ -1025,4 +1044,8 @@ void motor_sport(char in) {
       //      analogWrite(p_ms, 0);
       break;
   }
+}
+float get_temp() {
+  sensors.requestTemperatures();
+  return sensors.getTempCByIndex(0);
 }
