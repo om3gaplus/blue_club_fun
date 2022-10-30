@@ -5,6 +5,7 @@ import time
 import serial.tools.list_ports;
 import serial
 import inputs
+import re
 print ("available COM port/s is/are :")
 print([comport.device for comport in serial.tools.list_ports.comports()])
 ardport=str(int(input("input the number of arduino port: ")))
@@ -17,7 +18,7 @@ vazne=False
 pitch=False
 dande=False
 uspeed=0
-white_led_volume=0
+gwhite_led_volume=0
 orange_led_volume=0
 cruse_s=0
 crues_d='i'
@@ -66,8 +67,7 @@ def make_command(rea):
         if pitch==True  and manual_pitch(float(rea[5]),float(rea[6]))!='i':
           dast=('p00'+manual_pitch(float(rea[5]),float(rea[6])))
       sat-=1
-
-      
+ 
   if (float(time.time())-float(lasttime))>0.19:
     if int(rea[7])==1:
       sig="n"
@@ -82,6 +82,9 @@ def make_command(rea):
       uspeed=-9
     if int(rea[10])==1 and vazne==True:
       uspeed=9
+    if int(tra(rea[12]))>=20:
+      print("get temp")
+      write_read("gt>")
     if int(rea[11])==1:
       gcommand()
     if int(rea[15])==1 or int(rea[15])==-1 :
@@ -395,10 +398,7 @@ def manual_pitch(x,y):
 #========================================
 def write_read(x):
   arduino.write(bytes(x, 'utf-8'))
-  try:
-    return arduino.readline().decode()
-  except:
-    return
+  return None
 class XboxController(object):
   MAX_TRIG_VAL = math.pow(2, 8)
   MAX_JOY_VAL = math.pow(2, 15)
@@ -515,7 +515,7 @@ if __name__ == '__main__':
   while True:
     rea=joy.read()
     cc=make_command(rea)
-    if(cc!=lastc):
+    if(cc!=lastc) or cc[3]=='t' or cc[3]=='g' or cc[3]=='n' or cc[3]=='p':
       value = write_read(cc)
       if "x" in cc or (cc[2]=="0" and cc[1]=="0"):
         value = write_read(lastc)
@@ -526,4 +526,7 @@ if __name__ == '__main__':
       lastc=cc
       if (cc[3]=='v' or cc[3]=='b') and cc[5]!=0:
         uspeed=0
+    out=arduino.readline()
+    if len(re.findall(b'temp(.*)temp',out))>0:
+      print("temp: "+str(re.findall(b'temp(.*)temp',out)[0].decode()))
     time.sleep(0.03)
