@@ -9,9 +9,9 @@ DallasTemperature sensors(&oneWire);
 // libs
 float tacx = 0, tacy = 0, tacz = 0, ax = 0, ay = 0, az = 0, last_z = 0;
 byte cmrj = 1, ccmrj = 2;
-byte cmlj = 2, ccmlj = 1;
+byte cmlj = 1, ccmlj = 2;
 byte cmru = 2, ccmru = 1;
-byte cmlu = 2, ccmlu = 1;
+byte cmlu = 1, ccmlu = 2;
 byte cma = 2, ccma = 1;
 byte zarib_yaw = 5;
 byte zarib_roll = 8;
