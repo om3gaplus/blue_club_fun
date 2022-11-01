@@ -260,7 +260,7 @@ void jrl(char j, byte ri, bool at) {
     case 'r':
       mlj(ri *zarib_p_sport, cmlj);
       mrj(ri, cmrj);
-      mlu(ri *zarib_p_sport, cmlu);
+      mlu(ri, cmlu);
       mru(ri, cmru);
       if (at)
         move_signal();
@@ -269,7 +269,7 @@ void jrl(char j, byte ri, bool at) {
       mlj(ri, cmlj);
       mrj(ri *zarib_p_sport, cmrj);
       mlu(ri, cmlu);
-      mru(ri *zarib_p_sport, cmru);
+      mru(ri, cmru);
       if (at)
         move_signal();
       break;
@@ -277,7 +277,7 @@ void jrl(char j, byte ri, bool at) {
       mrj(ri, ccmrj);
       mlj(ri *zarib_p_sport, ccmlj);
       mru(ri, ccmru);
-      mlu(ri *zarib_p_sport, ccmlu);
+      mlu(ri , ccmlu);
       if (at)
         move_signal();
       break;
@@ -285,7 +285,7 @@ void jrl(char j, byte ri, bool at) {
       mlj(ri, ccmlj);
       mrj(ri *zarib_p_sport, ccmrj);
       mlu(ri, ccmlu);
-      mru(ri *zarib_p_sport , ccmru);
+      mru(ri , ccmru);
       if (at)
         move_signal();
       break;
@@ -1092,7 +1092,8 @@ void zarib_sport(char in1,char in2){
       zarib_p_sport=val/100;
       Serial.println(zarib_p_sport);
 
-}void zarib_taadol(char in1,char in2){
+}
+void zarib_taadol(char in1,char in2){
  String tempin = ((String)in1 + in2);
       float val = (tempin.toInt()); 
       zarib_jelobandi=val/100;
