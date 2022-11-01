@@ -18,7 +18,7 @@ byte zarib_roll = 8;
 byte zarib_pitch = 8;
 byte zarib_eslah = 5;
 // byte zarib_pichesh=2;
-char pitch_state='v';
+char pitch_state = 'v';
 //===============================
 byte zarib_gy_yaw = 5;
 byte zarib_gy_roll = 5;
@@ -59,6 +59,8 @@ byte tma = 0;
 //last commands
 char last_wasd = 'x';
 float last_wasd_speed = 0;
+float taghe=0.5;
+float zarib_p_sport=0.5;
 char last_ud = 'i';
 float last_ud_speed = 0;
 //****************************************
@@ -254,6 +256,39 @@ void jrl(char j, byte ri, bool at) {
         move_signal();
       break;
     //  **************************************
+    case 'r':
+      mlj(ri *zarib_p_sport, cmlj);
+      mrj(ri, cmrj);
+      mlu(ri *zarib_p_sport, cmlu);
+      mru(ri, cmru);
+      if (at)
+        move_signal();
+      break;
+    case 't':
+      mlj(ri, cmlj);
+      mrj(ri *zarib_p_sport, cmrj);
+      mlu(ri, cmlu);
+      mru(ri *zarib_p_sport, cmru);
+      if (at)
+        move_signal();
+      break;
+    case 'f':
+      mrj(ri, ccmrj);
+      mlj(ri *zarib_p_sport, ccmlj);
+      mru(ri, ccmru);
+      mlu(ri *zarib_p_sport, ccmlu);
+      if (at)
+        move_signal();
+      break;
+    case 'g':
+      mlj(ri, ccmlj);
+      mrj(ri *zarib_p_sport, ccmrj);
+      mlu(ri, ccmlu);
+      mru(ri *zarib_p_sport , ccmru);
+      if (at)
+        move_signal();
+      break;
+    //==========================================
     case 'p':
       mrj(0, 0);
       mlj(0, 0);
@@ -307,7 +342,8 @@ void ud(char ju, byte ru, bool at) {
       mlu(smlu - ru, cmlu);
       Serial.println((String) "dor motor kahesh yaft be :" + smru + " ba taghieer -" + ru);
       break;
-    case 'p': {
+    case 'p':
+      {
         ma(sma, tma);
         pitch_state = xy_state();
         if (pitch_state == 'v' || pitch_state == 's' || pitch_state == 'z' || pitch_state == 'c') {
@@ -356,9 +392,10 @@ void ud(char ju, byte ru, bool at) {
         }
       }
       break;
-    case 'n': {
+    case 'n':
+      {
         ma(sma, tma);
-       pitch_state= xy_state();
+        pitch_state = xy_state();
         if (pitch_state == 'v' || pitch_state == 'w' || pitch_state == 'q' || pitch_state == 'e') {
           if (tmlu == 0) {
             mlu(smlu + 0.5, cmlu);
@@ -406,7 +443,7 @@ void ud(char ju, byte ru, bool at) {
       }
       break;
     case 't':
-     pitch_state = xy_state();
+      pitch_state = xy_state();
       if (pitch_state == 'v' || pitch_state == 's' || pitch_state == 'z' || pitch_state == 'c') {
         if (tma == 0) {
           mlu(sma + 0.5, cma);
@@ -444,7 +481,7 @@ void ud(char ju, byte ru, bool at) {
       }
       break;
     case 'g':
-     pitch_state= xy_state();
+      pitch_state = xy_state();
       if (pitch_state == 'v' || pitch_state == 'w' || pitch_state == 'q' || pitch_state == 'e') {
         if (tma == 0) {
           mlu(sma + 0.5, ccma);
@@ -575,16 +612,15 @@ void gcommand(String in) {
   if (in[1] == 'm' && in[2] == 'a') {
     eslah_zarib_motor_up(in[3]);
   }
-  if (in[1] == 'y') {
-    zarib_gy(in[2], in[3]);
+  if (in[1] == 'z') {
+    zarib_sport(in[2], in[3]);
   }
   if (in[1] == 'l') {
     led_control(in[2], in[3]);
   }
   if (in[1] == 't') {
-    Serial.println((String)"temp" + get_temp() + "temp");
+    Serial.println((String) "temp" + get_temp() + "temp");
   }
-
 }
 //**********************************************************************
 void zarib_gy(char ang, char zar) {
@@ -1048,4 +1084,11 @@ void motor_sport(char in) {
 float get_temp() {
   sensors.requestTemperatures();
   return sensors.getTempCByIndex(0);
+}
+void zarib_sport(char in1,char in2){
+ String tempin = ((String)in1 + in2);
+      float val = (tempin.toInt()); 
+      zarib_p_sport=val/100;
+      Serial.println(zarib_p_sport);
+
 }
