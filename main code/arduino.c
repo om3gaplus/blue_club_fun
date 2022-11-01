@@ -70,7 +70,7 @@ void setup() {
   Wire.begin();
   sensors.begin();
   mpu6050.begin();
-  pinMode(led_pin, OUTPUT);
+  pinMode(led_white, OUTPUT);
   mpu6050.calcGyroOffsets(false);
   mtrj.attach(pmrj);
   mtlj.attach(pmlj);
