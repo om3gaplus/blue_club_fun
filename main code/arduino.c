@@ -60,7 +60,8 @@ byte tma = 0;
 char last_wasd = 'x';
 float last_wasd_speed = 0;
 float taghe=0.5;
-float zarib_p_sport=0.5;
+float zarib_p_sport=0.7;
+float zarib_jelobandi=0.25;
 char last_ud = 'i';
 float last_ud_speed = 0;
 //****************************************
@@ -191,7 +192,7 @@ void jrl(char j, byte ri, bool at) {
       break;
     //+++++++++++++++++===============++++++++++++++++++++++++++++======+++++++++++====================
     case 'i':
-      mrj(ri, cmrj);
+      mrj(ri-zarib_jelobandi, cmrj);
       mlj(ri, cmlj);
       mru(ri, cmru);
       mlu(ri, cmlu);
@@ -606,8 +607,8 @@ void gcommand(String in) {
   if (in[1] == 'r') {
     change_motor_wire(in[2]);
   }
-  if (in[1] == 'a') {
-    eslah_zarib(in[2], in[3]);
+  if (in[1] == 'j') {
+    zarib_taadol(in[2], in[3]);
   }
   if (in[1] == 'm' && in[2] == 'a') {
     eslah_zarib_motor_up(in[3]);
@@ -1090,5 +1091,11 @@ void zarib_sport(char in1,char in2){
       float val = (tempin.toInt()); 
       zarib_p_sport=val/100;
       Serial.println(zarib_p_sport);
+
+}void zarib_taadol(char in1,char in2){
+ String tempin = ((String)in1 + in2);
+      float val = (tempin.toInt()); 
+      zarib_jelobandi=val/100;
+      Serial.println(zarib_jelobandi);
 
 }
