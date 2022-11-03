@@ -16,7 +16,7 @@ cruse =False
 sport=False
 vazne=False
 pitch=False
-dande=False
+dande=3
 uspeed=0
 white_led_volume=0
 orange_led_volume=0
@@ -68,13 +68,12 @@ def make_command(rea):
         if pitch==True  and manual_pitch(float(rea[5]),float(rea[6]))!='i':
           dast=('p00'+manual_pitch(float(rea[5]),float(rea[6])))
       sat-=1
- 
+  if int(tra(rea[12]))>0:
+    uspeed=0
+    return ('x00i00:>')
   if (float(time.time())-float(lasttime))>0.19:
     if int(rea[7])==1:
-      sig="n"
       print("press x")
-    if int(rea[8])==1:
-      sig="r"
     if int(rea[9])==1 and vazne==False:
       updn(-9)
     if int(rea[10])==1 and vazne==False:
@@ -83,7 +82,7 @@ def make_command(rea):
       uspeed=-9
     if int(rea[10])==1 and vazne==True:
       uspeed=9
-    if int(tra(rea[12]))>=20:
+    if int(rea[7])==1:
       print("get temp")
       write_read("gt>")
     if int(rea[11])==1:
@@ -93,11 +92,9 @@ def make_command(rea):
     if int(rea[14])==1 or int(rea[14])==-1 :
       return orange_led_power(-1*int(rea[14]))
     if int(rea[13])==1:
-      leaver()
+      leaver(+1)
     if int (rea[18])==1:
-      tog_vazne()
-      sig='v'
-      en_vib()
+      leaver(-1)
     if int (rea[19])==1:
       tog_pitch()
       en_vib()
@@ -153,8 +150,10 @@ arduino = serial.Serial(port='COM'+ardport, baudrate=9600, timeout=0.001)
 #--------------------------------------
 def tra(fl):
   fl=int((fl-(fl%0.01))*100)
-  if dande:
+  if dande==1:
     fl=int(fl/6)
+  if dande==2:
+    fl=int(fl*0.4)
   if fl>98:
     return "99"
   if fl>=10:
@@ -234,18 +233,26 @@ def mmap(value, leftMin, leftMax, rightMin, rightMax):
     # Convert the 0-1 range into a value in the right range.
     return rightMin + (valueScaled * rightSpan)
 #=======================================
-def leaver():
+def leaver(dx):
   global dande
-  if dande:
-    dande=False
+  dande+=dx
+  if dande<=1:
+    dande=1
+  if dande>=3:
+    dande=3
+  if dande==3:
     c_vib('r',500)
-    print("dande 2")
+    print("dande 3")
     return
-  if dande!=True:
-    dande=True
+  if dande==1:
     c_vib('l',500)
     print("dande 1")
     return
+  if dande==2:
+    c_vib('b',1000)
+    print("dande 2")
+    return
+  
 #---------------------------------------
 def white_led_power(x):
   global white_led_volume
@@ -291,6 +298,8 @@ def c_vib(d,t):
       gamepad.set_vibration(0, 1, 400)
     if d=='l':
       gamepad.set_vibration(1, 0, 400)
+    if d=='b':
+      gamepad.set_vibration(1, 1, 1000)
     return
 #---------------------------------------
 def wasd(x,y):
@@ -302,7 +311,7 @@ def wasd(x,y):
       return 'a'
     if y>=0.5 and abs(x)<0.3:
       return 'w'
-    if dande !=True:
+    if dande >1:
       if y<=-0.5 and abs(x)<0.3:
         return 's'
       if x<=-0.3 and y>=0.3:
@@ -313,7 +322,7 @@ def wasd(x,y):
         return 'z'
       if x>=0.3 and y<=-0.3:
         return 'c'
-    if dande ==True:
+    if dande ==1:
       if y<=-0.5 and abs(x)<0.3:
         return '2'
       if x<=-0.3 and y>=0.3:
@@ -335,23 +344,24 @@ def wasd(x,y):
       return 'i'
     if y<=-0.5 and abs(x)<0.3:
       return 'k'
-    if x<=-0.3 and y>=0.3:
-      return 'u'
-    if x>=0.3 and y>=0.3:
-      return 'o'
-    if x<=-0.3 and y<=-0.3:
-      return 'n'
-    if x>=0.3 and y<=-0.3:
-      return 'm'
-    if dande!=True:
+    if dande==1:
+      if x<=-0.3 and y>=0.3:
+        return 'u'
+      if x>=0.3 and y>=0.3:
+        return 'o'
+      if x<=-0.3 and y<=-0.3:
+        return 'n'
+      if x>=0.3 and y<=-0.3:
+        return 'm'
+    if dande >1:
       if x<=-0.3 and y>=0.3:
         return 'r'
-    if x>=0.3 and y>=0.3:
-        return 't'
-    if x<=-0.3 and y<=-0.3:
-        return 'f'
-    if x>=0.3 and y<=-0.3:
-        return 'g'      
+      if x>=0.3 and y>=0.3:
+          return 't'
+      if x<=-0.3 and y<=-0.3:
+          return 'f'
+      if x>=0.3 and y<=-0.3:
+          return 'g'      
     return 'p'
 #----------------------------------------
 def cru(ispeed):
@@ -384,7 +394,7 @@ def cru(ispeed):
 def updn(dx):
   global uspeed
   global dande
-  if dande == False:
+  if dande >1:
     if(abs(uspeed)<=90):
       uspeed+=dx
       return
@@ -396,7 +406,7 @@ def updn(dx):
       return
     if uspeed==0 or uspeed==99 or uspeed==-99:
       en_vib()
-  if dande == True:
+  if dande ==1:
     dx=int(dx/3)
     if(abs(uspeed)<=97):
       uspeed+=dx
@@ -508,7 +518,7 @@ class XboxController(object):
     br=self.RightDPad
     pr=self.RightThumb
     pl=self.LeftThumb
-    #print(ry)
+    #print(lt)
     return [lx, ly, a, b, rt,rx,ry,y,b,a,x,bb,lt,rb,bl,bu,pl,pl,lb,bs,pr]
 
 
@@ -570,7 +580,7 @@ if __name__ == '__main__':
   while True:
     rea=joy.read()
     cc=make_command(rea)
-    if(cc!=lastc) or cc[3]=='t' or cc[3]=='g' or cc[3]=='n' or cc[3]=='p':
+    if(cc!=lastc) or cc[3]=='t' or cc[3]=='g' or cc[3]=='n' or cc[3]=='p' or (':' in cc) :
       value = write_read(cc)
       if "x" in cc or (cc[2]=="0" and cc[1]=="0"):
         value = write_read(lastc)
