@@ -59,9 +59,9 @@ byte tma = 0;
 //last commands
 char last_wasd = 'x';
 float last_wasd_speed = 0;
-float taghe=0.5;
-float zarib_p_sport=0.7;
-float zarib_jelobandi=0.25;
+float taghe = 0.5;
+float zarib_p_sport = 0.7;
+float zarib_jelobandi = 0.25;
 char last_ud = 'i';
 float last_ud_speed = 0;
 //****************************************
@@ -192,7 +192,7 @@ void jrl(char j, byte ri, bool at) {
       break;
     //+++++++++++++++++===============++++++++++++++++++++++++++++======+++++++++++====================
     case 'i':
-      mrj(ri-zarib_jelobandi, cmrj);
+      mrj(ri - zarib_jelobandi, cmrj);
       mlj(ri, cmlj);
       mru(ri, cmru);
       mlu(ri, cmlu);
@@ -258,7 +258,7 @@ void jrl(char j, byte ri, bool at) {
       break;
     //  **************************************
     case 'r':
-      mlj(ri *zarib_p_sport, cmlj);
+      mlj(ri * zarib_p_sport, cmlj);
       mrj(ri, cmrj);
       mlu(ri, cmlu);
       mru(ri, cmru);
@@ -267,7 +267,7 @@ void jrl(char j, byte ri, bool at) {
       break;
     case 't':
       mlj(ri, cmlj);
-      mrj(ri *zarib_p_sport, cmrj);
+      mrj(ri * zarib_p_sport, cmrj);
       mlu(ri, cmlu);
       mru(ri, cmru);
       if (at)
@@ -275,20 +275,51 @@ void jrl(char j, byte ri, bool at) {
       break;
     case 'f':
       mrj(ri, ccmrj);
-      mlj(ri *zarib_p_sport, ccmlj);
+      mlj(ri * zarib_p_sport, ccmlj);
       mru(ri, ccmru);
-      mlu(ri , ccmlu);
+      mlu(ri, ccmlu);
       if (at)
         move_signal();
       break;
     case 'g':
       mlj(ri, ccmlj);
-      mrj(ri *zarib_p_sport, ccmrj);
+      mrj(ri * zarib_p_sport, ccmrj);
       mlu(ri, ccmlu);
-      mru(ri , ccmru);
+      mru(ri, ccmru);
       if (at)
         move_signal();
       break;
+    case '7':
+      mlj(ri / 2, cmlj);
+      mrj(ri, cmrj);
+      if (at)
+        move_signal();
+      break;
+    case '9':
+      mlj(ri, cmlj);
+      mrj(ri / 2, cmrj);
+      if (at)
+        move_signal();
+      break;
+    case '1':
+      mrj(ri, ccmrj);
+      mlj(ri / 2, ccmlj);
+      if (at)
+        move_signal();
+      break;
+    case '3':
+      mlj(ri, ccmlj);
+      mrj(ri / 2, ccmrj);
+      if (at)
+        move_signal();
+      break;
+    case '2':
+      mlj(ri+8, ccmlj);
+      mrj(ri+8, ccmrj);
+      if (at)
+        move_signal();
+      break;
+    
     //==========================================
     case 'p':
       mrj(0, 0);
@@ -1086,17 +1117,15 @@ float get_temp() {
   sensors.requestTemperatures();
   return sensors.getTempCByIndex(0);
 }
-void zarib_sport(char in1,char in2){
- String tempin = ((String)in1 + in2);
-      float val = (tempin.toInt()); 
-      zarib_p_sport=val/100;
-      Serial.println(zarib_p_sport);
-
+void zarib_sport(char in1, char in2) {
+  String tempin = ((String)in1 + in2);
+  float val = (tempin.toInt());
+  zarib_p_sport = val / 100;
+  Serial.println(zarib_p_sport);
 }
-void zarib_taadol(char in1,char in2){
- String tempin = ((String)in1 + in2);
-      float val = (tempin.toInt()); 
-      zarib_jelobandi=val/100;
-      Serial.println(zarib_jelobandi);
-
+void zarib_taadol(char in1, char in2) {
+  String tempin = ((String)in1 + in2);
+  float val = (tempin.toInt());
+  zarib_jelobandi = val / 100;
+  Serial.println(zarib_jelobandi);
 }
