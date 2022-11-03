@@ -23,7 +23,8 @@ orange_led_volume=0
 cruse_s=0
 crues_d='i'
 lastc="."
-
+pitch_val='x00'
+cruse_pith=False
 def make_command(rea):
   sat=0
   global uspeed
@@ -100,6 +101,11 @@ def make_command(rea):
     if int (rea[19])==1:
       tog_pitch()
       en_vib()
+    if int(rea[20])==1:
+      global lastc
+      if pitch==True:
+        tog_cruse_pitch()
+        pitch_cruse(c=lastc[3:6])
     if int(rea[16])==1:
         tog_sport()
         en_vib()
@@ -166,10 +172,25 @@ def tog_pitch():
   if pitch==False:
     pitch=True
     print("manual pitch is on")
+    en_vib()
     return
   if pitch == True:
     pitch=False
     print("manual pitch is off")
+    en_vib()
+    return
+#=======================================
+def tog_cruse_pitch():
+  global cruse_pith
+  if cruse_pith==False:
+    cruse_pith=True
+    print("cruse_pith is on")
+    en_vib()
+    return
+  if cruse_pith == True:
+    cruse_pith=False
+    print("cruse_pith is off")
+    en_vib()
     return
 #=======================================
 def vazne_signal(dx):
@@ -417,6 +438,12 @@ def manual_pitch(x,y):
     if y<=-0.1:
       return 'g'+speed
     return 'i'
+#*-****************---------------************---
+def pitch_cruse(x):
+  global cruse_pitch
+  global pitch_val
+  pitch_val=x
+  return
 #========================================
 def write_read(x):
   arduino.write(bytes(x, 'utf-8'))
@@ -476,7 +503,7 @@ class XboxController(object):
     pr=self.RightThumb
     pl=self.LeftThumb
     #print(ry)
-    return [lx, ly, a, b, rt,rx,ry,y,b,a,x,bb,lt,rb,bl,bu,pl,pl,lb,bs]
+    return [lx, ly, a, b, rt,rx,ry,y,b,a,x,bb,lt,rb,bl,bu,pl,pl,lb,bs,pr]
 
 
   def _monitor_controller(self):
