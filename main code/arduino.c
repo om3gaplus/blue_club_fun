@@ -380,45 +380,45 @@ void ud(char ju, byte ru, bool at) {
         pitch_state = xy_state();
         if (pitch_state == 'v' || pitch_state == 's' || pitch_state == 'z' || pitch_state == 'c') {
           if (tmlu == 0) {
-            mlu(smlu + 3, ccmlu);
-            mru(smru + 3, ccmru);
+            mlu(smlu + 2, ccmlu);
+            mru(smru + 2, ccmru);
           }
           if (tmlu == ccmlu) {
-            mlu(smlu + 3, ccmlu);
-            mru(smru + 3, ccmru);
+            mlu(smlu + 2, ccmlu);
+            mru(smru + 2, ccmru);
           }
           if (tmlu == cmlu) {
-            mlu(smlu - 3, cmlu);
-            mru(smru - 3, cmru);
+            mlu(smlu - 2, cmlu);
+            mru(smru - 2, cmru);
           }
         }
         if (pitch_state == 'w' || pitch_state == 'q' || pitch_state == 'e') {
           if ((ru < abs(ax)) && ((abs(ax) - ru) > 5)) {
             if (tmlu == 0) {
-              mlu(smlu + 3, ccmlu);
-              mru(smru + 3, ccmru);
+              mlu(smlu + 2, ccmlu);
+              mru(smru + 2, ccmru);
             }
             if (tmlu == ccmlu) {
-              mlu(smlu + 3, ccmlu);
-              mru(smru + 3, ccmru);
+              mlu(smlu + 2, ccmlu);
+              mru(smru + 2, ccmru);
             }
             if (tmlu == cmlu) {
-              mlu(smlu - 3, cmlu);
-              mru(smru - 3, cmru);
+              mlu(smlu - 2, cmlu);
+              mru(smru - 2, cmru);
             }
           }
           if ((ru > abs(ax)) && ((abs(ax) - ru) < 10)) {
             if (tmlu == 0) {
-              mlu(smlu + 3, cmlu);
-              mru(smru + 3, cmru);
+              mlu(smlu + 2, cmlu);
+              mru(smru + 2, cmru);
             }
             if (tmlu == ccmlu) {
-              mlu(smlu - 3, ccmlu);
-              mru(smru - 3, ccmru);
+              mlu(smlu - 2, ccmlu);
+              mru(smru - 2, ccmru);
             }
             if (tmlu == cmlu) {
-              mlu(smlu + 3, cmlu);
-              mru(smru + 3, cmru);
+              mlu(smlu + 2, cmlu);
+              mru(smru + 2, cmru);
             }
           }
         }
@@ -430,45 +430,45 @@ void ud(char ju, byte ru, bool at) {
         pitch_state = xy_state();
         if (pitch_state == 'v' || pitch_state == 'w' || pitch_state == 'q' || pitch_state == 'e') {
           if (tmlu == 0) {
-            mlu(smlu + 3, cmlu);
-            mru(smru + 3, cmru);
+            mlu(smlu + 2, cmlu);
+            mru(smru + 2, cmru);
           }
           if (tmlu == cmlu) {
-            mlu(smlu + 3, cmlu);
-            mru(smru + 3, cmru);
+            mlu(smlu + 2, cmlu);
+            mru(smru + 2, cmru);
           }
           if (tmlu == ccmlu) {
-            mlu(smlu - 3, ccmlu);
-            mru(smru - 3, ccmru);
+            mlu(smlu - 2, ccmlu);
+            mru(smru - 2, ccmru);
           }
         }
         if (pitch_state == 's' || pitch_state == 'z' || pitch_state == 'c') {
           if ((ru < abs(ax)) && ((abs(ax) - ru) > 5)) {
             if (tmlu == 0) {
-              mlu(smlu + 3, cmlu);
-              mru(smru + 3, cmru);
+              mlu(smlu + 2, cmlu);
+              mru(smru + 2, cmru);
             }
             if (tmlu == cmlu) {
-              mlu(smlu + 3, cmlu);
-              mru(smru + 3, cmru);
+              mlu(smlu + 2, cmlu);
+              mru(smru + 2, cmru);
             }
             if (tmlu == ccmlu) {
-              mlu(smlu - 3, ccmlu);
-              mru(smru - 3, ccmru);
+              mlu(smlu - 2, ccmlu);
+              mru(smru - 2, ccmru);
             }
           }
           if ((ru > abs(ax)) && ((abs(ax) - ru) < 10)) {
             if (tmlu == 0) {
-              mlu(smlu + 3, ccmlu);
-              mru(smru + 3, ccmru);
+              mlu(smlu + 2, ccmlu);
+              mru(smru + 2, ccmru);
             }
             if (tmlu == cmlu) {
-              mlu(smlu - 3, cmlu);
-              mru(smru - 3, cmru);
+              mlu(smlu - 2, cmlu);
+              mru(smru - 2, cmru);
             }
             if (tmlu == ccmlu) {
-              mlu(smlu + 3, ccmlu);
-              mru(smru + 3, ccmru);
+              mlu(smlu + 2, ccmlu);
+              mru(smru + 2, ccmru);
             }
           }
         }
@@ -478,36 +478,36 @@ void ud(char ju, byte ru, bool at) {
       pitch_state = xy_state();
       if (pitch_state == 'v' || pitch_state == 's' || pitch_state == 'z' || pitch_state == 'c') {
         if (tma == 0) {
-          ma(sma + 3, cma);
+          ma(sma + 2, cma);
         }
         if (tma == cma) {
-          ma(sma + 3, cma);
+          ma(sma + 2, cma);
         }
         if (tma == ccma) {
-          ma(sma - 3, ccma);
+          ma(sma - 2, ccma);
         }
       }
       if (pitch_state == 'w' || pitch_state == 'q' || pitch_state == 'e') {
         if ((ru < abs(ax)) && ((abs(ax) - ru) > 5)) {
           if (tma == 0) {
-            ma(sma + 3, cma);
+            ma(sma + 2, cma);
           }
           if (tma == cma) {
-            ma(sma + 3, cma);
+            ma(sma + 2, cma);
           }
           if (tma == ccma) {
-            ma(sma - 3, ccma);
+            ma(sma - 2, ccma);
           }
         }
         if ((ru > abs(ax)) && ((abs(ax) - ru) < 10)) {
           if (tmlu == 0) {
-            ma(sma + 3, ccma);
+            ma(sma + 2, ccma);
           }
           if (tma == cma) {
-            ma(sma - 3, cma);
+            ma(sma - 2, cma);
           }
           if (tma == ccma) {
-            ma(sma + 3, ccma);
+            ma(sma + 2, ccma);
           }
         }
       }
@@ -516,36 +516,36 @@ void ud(char ju, byte ru, bool at) {
       pitch_state = xy_state();
       if (pitch_state == 'v' || pitch_state == 'w' || pitch_state == 'q' || pitch_state == 'e') {
         if (tma == 0) {
-          ma(sma + 3, ccma);
+          ma(sma + 2, ccma);
         }
         if (tma == ccma) {
-          ma(sma + 3, ccma);
+          ma(sma + 2, ccma);
         }
         if (tma == cma) {
-          ma(sma - 3, cma);
+          ma(sma - 2, cma);
         }
       }
       if (pitch_state == 's' || pitch_state == 'z' || pitch_state == 'c') {
         if ((ru < abs(ax)) && ((abs(ax) - ru) > 5)) {
           if (tma == 0) {
-            ma(sma + 3, ccma);
+            ma(sma + 2, ccma);
           }
           if (tma == ccma) {
-            ma(sma + 3, ccma);
+            ma(sma + 2, ccma);
           }
           if (tma == cma) {
-            ma(sma - 3, cma);
+            ma(sma - 2, cma);
           }
         }
         if ((ru > abs(ax)) && ((abs(ax) - ru) < 10)) {
           if (tmlu == 0) {
-            ma(sma + 3, cma);
+            ma(sma + 2, cma);
           }
           if (tma == ccma) {
-            ma(sma - 3, ccma);
+            ma(sma - 2, ccma);
           }
           if (tma == cma) {
-            ma(sma + 3, cma);
+            ma(sma + 2, cma);
           }
         }
       }
