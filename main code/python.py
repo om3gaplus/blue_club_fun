@@ -275,16 +275,29 @@ def wasd(x,y):
       return 'a'
     if y>=0.5 and abs(x)<0.3:
       return 'w'
-    if y<=-0.5 and abs(x)<0.3:
-      return 's'
-    if x<=-0.3 and y>=0.3:
-      return 'q'
-    if x>=0.3 and y>=0.3:
-      return 'e'
-    if x<=-0.3 and y<=-0.3:
-      return 'z'
-    if x>=0.3 and y<=-0.3:
-      return 'c'
+    if dande !=True:
+      if y<=-0.5 and abs(x)<0.3:
+        return 's'
+      if x<=-0.3 and y>=0.3:
+        return 'q'
+      if x>=0.3 and y>=0.3:
+        return 'e'
+      if x<=-0.3 and y<=-0.3:
+        return 'z'
+      if x>=0.3 and y<=-0.3:
+        return 'c'
+    if dande ==True:
+      if y<=-0.5 and abs(x)<0.3:
+        return '2'
+      if x<=-0.3 and y>=0.3:
+        return '7'
+      if x>=0.3 and y>=0.3:
+        return '9'
+      if x<=-0.3 and y<=-0.3:
+        return '1'
+      if x>=0.3 and y<=-0.3:
+        return '3'
+        
     return 'x'
   if sport==True:
     if x>=0.5 and abs(y)<0.3:
