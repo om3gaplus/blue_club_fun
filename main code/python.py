@@ -121,7 +121,13 @@ def make_command(rea):
     sig='n'
     if pitch==False:
       sig=motor_sport(float(rea[5]),float(rea[6]))
-  return (dast+sig+">")
+  if cruse_pith!=True:
+    return (dast+sig+">")
+  if cruse_pith==True:
+    global pitch_val
+    dast=dast[0:3]+pitch_val
+    return (dast+sig+">")
+  
 def gcommand():
   gc=1
   while gc==1:
