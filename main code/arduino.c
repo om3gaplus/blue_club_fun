@@ -62,6 +62,7 @@ float last_wasd_speed = 0;
 float taghe = 0.5;
 float zarib_p_sport = 0.7;
 float zarib_jelobandi = 0.25;
+float zarib_manual_pitch=2;
 char last_ud = 'i';
 float last_ud_speed = 0;
 //****************************************
@@ -133,10 +134,12 @@ void loop() {
   }
 }
 void jrl(char j, byte ri, bool at) {
+  
   switch (j) {
     case 'w':
       mrj(ri, cmrj);
       mlj(ri, cmlj);
+//      Serial.println((String)"<command is :"+j+" " + ri+">");
       if (at)
         move_signal();
       break;
@@ -380,45 +383,45 @@ void ud(char ju, byte ru, bool at) {
         pitch_state = xy_state();
         if (pitch_state == 'v' || pitch_state == 's' || pitch_state == 'z' || pitch_state == 'c') {
           if (tmlu == 0) {
-            mlu(smlu + 2, ccmlu);
-            mru(smru + 2, ccmru);
+            mlu(smlu + zarib_manual_pitch, ccmlu);
+            mru(smru + zarib_manual_pitch, ccmru);
           }
           if (tmlu == ccmlu) {
-            mlu(smlu + 2, ccmlu);
-            mru(smru + 2, ccmru);
+            mlu(smlu + zarib_manual_pitch, ccmlu);
+            mru(smru + zarib_manual_pitch, ccmru);
           }
           if (tmlu == cmlu) {
-            mlu(smlu - 2, cmlu);
-            mru(smru - 2, cmru);
+            mlu(smlu - zarib_manual_pitch, cmlu);
+            mru(smru - zarib_manual_pitch, cmru);
           }
         }
         if (pitch_state == 'w' || pitch_state == 'q' || pitch_state == 'e') {
           if ((ru < abs(ax)) && ((abs(ax) - ru) > 5)) {
             if (tmlu == 0) {
-              mlu(smlu + 2, ccmlu);
-              mru(smru + 2, ccmru);
+              mlu(smlu + zarib_manual_pitch, ccmlu);
+              mru(smru + zarib_manual_pitch, ccmru);
             }
             if (tmlu == ccmlu) {
-              mlu(smlu + 2, ccmlu);
-              mru(smru + 2, ccmru);
+              mlu(smlu + zarib_manual_pitch, ccmlu);
+              mru(smru + zarib_manual_pitch, ccmru);
             }
             if (tmlu == cmlu) {
-              mlu(smlu - 2, cmlu);
-              mru(smru - 2, cmru);
+              mlu(smlu - zarib_manual_pitch, cmlu);
+              mru(smru - zarib_manual_pitch, cmru);
             }
           }
           if ((ru > abs(ax)) && ((abs(ax) - ru) < 10)) {
             if (tmlu == 0) {
-              mlu(smlu + 2, cmlu);
-              mru(smru + 2, cmru);
+              mlu(smlu + zarib_manual_pitch, cmlu);
+              mru(smru + zarib_manual_pitch, cmru);
             }
             if (tmlu == ccmlu) {
-              mlu(smlu - 2, ccmlu);
-              mru(smru - 2, ccmru);
+              mlu(smlu - zarib_manual_pitch, ccmlu);
+              mru(smru - zarib_manual_pitch, ccmru);
             }
             if (tmlu == cmlu) {
-              mlu(smlu + 2, cmlu);
-              mru(smru + 2, cmru);
+              mlu(smlu + zarib_manual_pitch, cmlu);
+              mru(smru + zarib_manual_pitch, cmru);
             }
           }
         }
@@ -430,45 +433,45 @@ void ud(char ju, byte ru, bool at) {
         pitch_state = xy_state();
         if (pitch_state == 'v' || pitch_state == 'w' || pitch_state == 'q' || pitch_state == 'e') {
           if (tmlu == 0) {
-            mlu(smlu + 2, cmlu);
-            mru(smru + 2, cmru);
+            mlu(smlu + zarib_manual_pitch, cmlu);
+            mru(smru + zarib_manual_pitch, cmru);
           }
           if (tmlu == cmlu) {
-            mlu(smlu + 2, cmlu);
-            mru(smru + 2, cmru);
+            mlu(smlu + zarib_manual_pitch, cmlu);
+            mru(smru + zarib_manual_pitch, cmru);
           }
           if (tmlu == ccmlu) {
-            mlu(smlu - 2, ccmlu);
-            mru(smru - 2, ccmru);
+            mlu(smlu - zarib_manual_pitch, ccmlu);
+            mru(smru - zarib_manual_pitch, ccmru);
           }
         }
         if (pitch_state == 's' || pitch_state == 'z' || pitch_state == 'c') {
           if ((ru < abs(ax)) && ((abs(ax) - ru) > 5)) {
             if (tmlu == 0) {
-              mlu(smlu + 2, cmlu);
-              mru(smru + 2, cmru);
+              mlu(smlu + zarib_manual_pitch, cmlu);
+              mru(smru + zarib_manual_pitch, cmru);
             }
             if (tmlu == cmlu) {
-              mlu(smlu + 2, cmlu);
-              mru(smru + 2, cmru);
+              mlu(smlu + zarib_manual_pitch, cmlu);
+              mru(smru + zarib_manual_pitch, cmru);
             }
             if (tmlu == ccmlu) {
-              mlu(smlu - 2, ccmlu);
-              mru(smru - 2, ccmru);
+              mlu(smlu - zarib_manual_pitch, ccmlu);
+              mru(smru - zarib_manual_pitch, ccmru);
             }
           }
           if ((ru > abs(ax)) && ((abs(ax) - ru) < 10)) {
             if (tmlu == 0) {
-              mlu(smlu + 2, ccmlu);
-              mru(smru + 2, ccmru);
+              mlu(smlu + zarib_manual_pitch, ccmlu);
+              mru(smru + zarib_manual_pitch, ccmru);
             }
             if (tmlu == cmlu) {
-              mlu(smlu - 2, cmlu);
-              mru(smru - 2, cmru);
+              mlu(smlu - zarib_manual_pitch, cmlu);
+              mru(smru - zarib_manual_pitch, cmru);
             }
             if (tmlu == ccmlu) {
-              mlu(smlu + 2, ccmlu);
-              mru(smru + 2, ccmru);
+              mlu(smlu + zarib_manual_pitch, ccmlu);
+              mru(smru + zarib_manual_pitch, ccmru);
             }
           }
         }
@@ -478,36 +481,36 @@ void ud(char ju, byte ru, bool at) {
       pitch_state = xy_state();
       if (pitch_state == 'v' || pitch_state == 's' || pitch_state == 'z' || pitch_state == 'c') {
         if (tma == 0) {
-          ma(sma + 2, cma);
+          ma(sma + zarib_manual_pitch, cma);
         }
         if (tma == cma) {
-          ma(sma + 2, cma);
+          ma(sma + zarib_manual_pitch, cma);
         }
         if (tma == ccma) {
-          ma(sma - 2, ccma);
+          ma(sma - zarib_manual_pitch, ccma);
         }
       }
       if (pitch_state == 'w' || pitch_state == 'q' || pitch_state == 'e') {
         if ((ru < abs(ax)) && ((abs(ax) - ru) > 5)) {
           if (tma == 0) {
-            ma(sma + 2, cma);
+            ma(sma + zarib_manual_pitch, cma);
           }
           if (tma == cma) {
-            ma(sma + 2, cma);
+            ma(sma + zarib_manual_pitch, cma);
           }
           if (tma == ccma) {
-            ma(sma - 2, ccma);
+            ma(sma - zarib_manual_pitch, ccma);
           }
         }
         if ((ru > abs(ax)) && ((abs(ax) - ru) < 10)) {
           if (tmlu == 0) {
-            ma(sma + 2, ccma);
+            ma(sma + zarib_manual_pitch, ccma);
           }
           if (tma == cma) {
-            ma(sma - 2, cma);
+            ma(sma - zarib_manual_pitch, cma);
           }
           if (tma == ccma) {
-            ma(sma + 2, ccma);
+            ma(sma + zarib_manual_pitch, ccma);
           }
         }
       }
@@ -516,36 +519,36 @@ void ud(char ju, byte ru, bool at) {
       pitch_state = xy_state();
       if (pitch_state == 'v' || pitch_state == 'w' || pitch_state == 'q' || pitch_state == 'e') {
         if (tma == 0) {
-          ma(sma + 2, ccma);
+          ma(sma + zarib_manual_pitch, ccma);
         }
         if (tma == ccma) {
-          ma(sma + 2, ccma);
+          ma(sma + zarib_manual_pitch, ccma);
         }
         if (tma == cma) {
-          ma(sma - 2, cma);
+          ma(sma - zarib_manual_pitch, cma);
         }
       }
       if (pitch_state == 's' || pitch_state == 'z' || pitch_state == 'c') {
         if ((ru < abs(ax)) && ((abs(ax) - ru) > 5)) {
           if (tma == 0) {
-            ma(sma + 2, ccma);
+            ma(sma + zarib_manual_pitch, ccma);
           }
           if (tma == ccma) {
-            ma(sma + 2, ccma);
+            ma(sma + zarib_manual_pitch, ccma);
           }
           if (tma == cma) {
-            ma(sma - 2, cma);
+            ma(sma - zarib_manual_pitch, cma);
           }
         }
         if ((ru > abs(ax)) && ((abs(ax) - ru) < 10)) {
           if (tmlu == 0) {
-            ma(sma + 2, cma);
+            ma(sma + zarib_manual_pitch, cma);
           }
           if (tma == ccma) {
-            ma(sma - 2, ccma);
+            ma(sma - zarib_manual_pitch, ccma);
           }
           if (tma == cma) {
-            ma(sma + 2, cma);
+            ma(sma + zarib_manual_pitch, cma);
           }
         }
       }
@@ -653,6 +656,10 @@ void gcommand(String in) {
   if (in[1] == 't') {
     Serial.println((String) "temp" + get_temp() + "temp");
   }
+  if (in[1] == 'p') {
+    zarib_mp(in[2]);
+  }
+  
 }
 //**********************************************************************
 void zarib_gy(char ang, char zar) {
@@ -1128,4 +1135,10 @@ void zarib_taadol(char in1, char in2) {
   float val = (tempin.toInt());
   zarib_jelobandi = val / 100;
   Serial.println(zarib_jelobandi);
+}
+void zarib_mp(char in1) {
+  String tempin = ((String)in1);
+  float val = (tempin.toInt());
+  zarib_manual_pitch = val;
+  Serial.println(zarib_manual_pitch);
 }
